@@ -25,8 +25,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-          cache: "yarn"
-          cache-dependency-path: yarn.lock
       - name: Install dependencies
         run: yarn install --focus
       - name: Linter
