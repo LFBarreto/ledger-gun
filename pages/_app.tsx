@@ -1,34 +1,17 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import Head from "next/head";
-
-import { ThemeProvider } from "styled-components";
-
-import defaultTheme from "../styles/theme";
-import { GlobalStyle } from "../styles/GlobalStyle";
-
+import { appWithTranslation } from "next-i18next";
+import { StyleProvider } from "@ledgerhq/react-ui";
+import { GlobalStyle } from "../src/styles/global";
 import "modern-normalize";
 
-export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter();
 
-  const { backgroundColor, textColor } = router.query;
-
-  const theme = useMemo(
-    () => ({
-      colors: {
-        ...defaultTheme.colors,
-        background:
-          typeof backgroundColor === "string"
-            ? backgroundColor
-            : defaultTheme.colors.background,
-        text:
-          typeof textColor === "string" ? textColor : defaultTheme.colors.text,
-      },
-    }),
-    [backgroundColor, textColor]
-  );
+  const { theme } = router.query;
+  const v3SelectedPalettes = theme === "light" ? "light" : "dark";
 
   return (
     <>
@@ -37,17 +20,14 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
         />
-        <title>Ledger Platform Apps</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
+        <title>Ledger Gun</title>
       </Head>
-      <ThemeProvider theme={theme}>
+      <StyleProvider selectedPalette={v3SelectedPalettes} fontsPath="fonts">
         <GlobalStyle />
         <Component {...pageProps} />
-      </ThemeProvider>
+      </StyleProvider>
     </>
   );
 }
+
+export default appWithTranslation(MyApp);
