@@ -1,20 +1,21 @@
 {
-  "id": "testy",
-  "name": "Testy",
-  "url": "http://localhost:3000",
-  "homepageUrl": "https://lido.fi/",
-  "icon": "https://cdn.live.ledger.com/icons/platform/lido.png",
+  "id": "ledger-gun",
+  "name": "Ledger Gun",
+  "url": "https://ledger-gun.vercel.app/",
+  "homepageUrl": "https://ledger-gun.vercel.app/",
+  "icon": "https://ledger-gun.vercel.app/icon.png",
   "platform": "all",
   "apiVersion": "0.0.1",
   "manifestVersion": "1",
   "branch": "stable",
   "categories": ["debug"],
+  "currencies": ["bitcoin", "ethereum"],
   "content": {
     "shortDescription": {
-      "en": "Stake your ETH with Lido to earn daily staking rewards."
+      "en": "Shoot your best shot with Ledger-Gun!"
     },
     "description": {
-      "en": "Stake your ETH with Lido to earn daily staking rewards."
+      "en": "Shoot your best shot with Ledger-Gun!"
     }
   },
   "permissions": [],

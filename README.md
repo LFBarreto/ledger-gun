@@ -1,22 +1,32 @@
-# Platform App Debug
+<p style="width: 100%;display: flex; flex-direction: row; justify-content: center;">
+<img src="https://ledger-gun.vercel.app/icon.png" width="300" height="300" />
+</p>
+
+# Ledger Gun
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-This is a simple platform app to easily try out the [Ledger Live SDK](https://github.com/LedgerHQ/live-app-sdk) to test capabilities of our platform integration solution.
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
 # or
+yarn
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+To add more pages add them unfer `pages` directory and link to them using a `Link`
+
+```js
+import Link from "next/link";
+```
 
 ## Learn More
 
