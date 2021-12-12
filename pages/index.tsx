@@ -88,6 +88,12 @@ const ACTIONS = [
     usePayload: true,
   },
   {
+    value: "message.sign",
+    label: "Sign Message",
+    useAccount: true,
+    usePayload: true,
+  },
+  {
     value: "transaction.broadcast",
     label: "Broadcast Transaction",
     useAccount: true,
@@ -154,6 +160,19 @@ const DebugApp = () => {
             transaction,
             payload?.params
           );
+        } catch (error) {
+          action = Promise.reject(error);
+        }
+        break;
+      case "message.sign":
+        try {
+          const payload = JSON.parse(rawPayload);
+          console.log(payload);
+          action = api.current._request("message.sign", {
+            accountId: account.id,
+            message: payload.message,
+            params: payload?.params || {},
+          });
         } catch (error) {
           action = Promise.reject(error);
         }
