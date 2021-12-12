@@ -19,11 +19,13 @@ jobs:
     outputs:
       lint_failed: ${{ steps.lint.outcome == 'failure' }}
       typecheck_failed: ${{ steps.typecheck.outcome == 'failure' }}
+      build_failed: ${{ steps.build.outcome == 'failure' }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          cache: yarn
+          node-version: "14"
+          cache: "yarn"
           cache-dependency-path: yarn.lock
       - name: Install dependencies
         run: yarn install --focus
