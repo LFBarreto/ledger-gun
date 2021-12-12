@@ -10,6 +10,7 @@
     "format:fix": "prettier --write 'src/**' 'pages/**'",
     "lint:check": "eslint --cache src/** pages/**",
     "lint:fix": "eslint --cache --fix src/** pages/**",
+    "typecheck": "tsc --p . --noEmit",
     "prepare": "husky install"
   },
   "dependencies": {

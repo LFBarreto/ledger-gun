@@ -167,7 +167,7 @@ const DebugApp = () => {
       case "message.sign":
         try {
           const payload = JSON.parse(rawPayload);
-          console.log(payload);
+          // @ts-expect-error to update
           action = api.current._request("message.sign", {
             accountId: account.id,
             message: payload.message,
