@@ -38,4 +38,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The main branch is automatically deployed to a dedicated vercel server (https://ledger-gun.vercel.app/)[https://ledger-gun.vercel.app/]
+The main branch is automatically deployed to a dedicated vercel server https://ledger-gun.vercel.app/
