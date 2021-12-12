@@ -1,6 +1,5 @@
-<p style="width: 100%;display: flex; flex-direction: row; justify-content: center;">
-<img src="https://ledger-gun.vercel.app/icon.png" width="300" height="300" />
-</p>
+
+![ledgerGunSmall](https://user-images.githubusercontent.com/11752937/145725245-ec5caaa8-df36-456e-b38d-8a6f6bc2cd9d.gif)
 
 # Ledger Gun
 
@@ -39,6 +38,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The main branch is automatically deployed to a dedicated vercel server (https://ledger-gun.vercel.app/)[https://ledger-gun.vercel.app/]
