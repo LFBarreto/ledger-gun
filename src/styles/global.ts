@@ -23,6 +23,55 @@ export const GlobalStyle = createGlobalStyle`
     padding: ${(p) => p.theme.space[3]}px;
   }
 
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-ExtraLight-BETA.woff2") format("woff2");
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-Light-BETA.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-ExtraBold.woff2") format("woff2");
+    font-weight: 900;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Alpha";
+    src: url("fonts/HMAlphaMono-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+
   *, *:before, *:after {
     box-sizing: inherit;
   }

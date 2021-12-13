@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { appWithTranslation } from "next-i18next";
-import { StyleProvider } from "@ledgerhq/react-ui";
-import { GlobalStyle } from "../src/styles/global";
+import { StyleProvider } from "../src/styles/StyleProvider";
 import "modern-normalize";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
@@ -22,8 +21,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         />
         <title>Ledger Gun</title>
       </Head>
-      <StyleProvider selectedPalette={v3SelectedPalettes} fontsPath="fonts">
-        <GlobalStyle />
+      <StyleProvider selectedPalette={v3SelectedPalettes}>
         <Component {...pageProps} />
       </StyleProvider>
     </>

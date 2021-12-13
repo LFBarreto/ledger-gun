@@ -44,7 +44,7 @@ const ACTIONS = [
 
 const prettyJSON = (payload: any) => JSON.stringify(payload, null, 2);
 */
-const DebugApp = () => {
+const DebugApp = (): React.ReactElement => {
   const api = useRef<LedgerLiveApi | null>(null);
   const { t } = useTranslation("common");
   const [, setLastAnswer] = useState<any>(undefined);
@@ -160,7 +160,7 @@ const DebugApp = () => {
     };
   }, []);
 
-  return <Button variant="main">{t("hello")}</Button>;
+  return <Button variant="color">{t("hello")}</Button>;
 };
 
 export async function getStaticProps({ locale }: { locale: string }) {
