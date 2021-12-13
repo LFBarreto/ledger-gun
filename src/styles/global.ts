@@ -13,7 +13,8 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     width: 100%;
     height: 100%;
-    background-color: ${(p) => p.theme.colors.background.main}
+    background-color: ${(p) => p.theme.colors.background.main};
+    cursor: url('/cursor.ico') 8 8, auto;
   }
 
   [data-reactroot] {
