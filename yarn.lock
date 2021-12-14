@@ -2718,7 +2718,7 @@ cssnano-simple@3.0.0:
   dependencies:
     cssnano-preset-simple "^3.0.0"
 
-csstype@^2.5.7:
+csstype@^2.5.7, csstype@^2.6.7:
   version "2.6.19"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.19.tgz#feeb5aae89020bb389e1f63669a5ed490e391caa"
   integrity sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==
@@ -3472,6 +3472,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+fuse.js@^6.4.2:
+  version "6.4.6"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.4.6.tgz#62f216c110e5aa22486aff20be7896d19a059b79"
+  integrity sha512-/gYxR/0VpXmWSfZOIPS3rWwU8SHgsRTwWuXhyb2O6s7aRuVtHtxCkR33bNYu3wyLyNx/Wpv0vU7FZy8Vj53VNw==
+
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
@@ -3663,6 +3668,11 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
   integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
+htm@^3.0.4:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/htm/-/htm-3.1.0.tgz#0c305493b60da9f6ed097a2aaf4c994bd85ea022"
+  integrity sha512-L0s3Sid5r6YwrEvkig14SK3Emmc+kIjlfLhEGn2Vy3bk21JyDEes4MoDsbJk6luaPp8bugErnxPz86ZuAw6e5Q==
+
 html-escaper@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
@@ -3737,6 +3747,11 @@ idb@^6.1.4:
   resolved "https://registry.yarnpkg.com/idb/-/idb-6.1.5.tgz#dbc53e7adf1ac7c59f9b2bf56e00b4ea4fce8c7b"
   integrity sha512-IJtugpKkiVXQn5Y+LteyBCNk1N8xpGV3wWZk9EVtZWH8DYkjBn0bX1XnGP9RkyZF0sAcywa6unHqSWKe7q4LGw==
 
+identicon.js@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/identicon.js/-/identicon.js-2.3.3.tgz#c505b8d60ecc6ea13bbd991a33964c44c1ad60a1"
+  integrity sha512-/qgOkXKZ7YbeCYbawJ9uQQ3XJ3uBg9VDpvHjabCAPp6aRMhjLaFAxG90+1TxzrhKaj6AYpVGrx6UXQfQA41UEA==
+
 ieee754@^1.1.4:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
@@ -3810,6 +3825,18 @@ intersection-observer@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.11.0.tgz#f4ea067070326f68393ee161cc0a2ca4c0040c6f"
   integrity sha512-KZArj2QVnmdud9zTpKf279m2bbGfG+4/kn16UU0NL3pTVl52ZHiJ9IRNSsnn6jaHrL9EGLFM5eWjTx2fz/+zoQ==
+
+iris-lib@^0.0.159:
+  version "0.0.159"
+  resolved "https://registry.yarnpkg.com/iris-lib/-/iris-lib-0.0.159.tgz#9e5aaba89c397d7f8eaf50d5438f30e08bc369f3"
+  integrity sha512-GtTX4o9OqGsn786g7uk7fyg/2kMuxOHjFZw3DNLrcCnu3mg22588eLKrsvuHtyInRX5WrmS0cJ6R8qBRhSx2hg==
+  dependencies:
+    fuse.js "^6.4.2"
+    htm "^3.0.4"
+    identicon.js "^2.3.3"
+    jsxstyle "^2.4.0"
+    preact "^10.5.5"
+    preact-custom-element "^4.2.1"
 
 is-arguments@^1.0.4:
   version "1.1.1"
@@ -4125,6 +4152,20 @@ jsonpointer@^5.0.0:
   dependencies:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
+
+jsxstyle-utils@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/jsxstyle-utils/-/jsxstyle-utils-2.5.0.tgz#457f3ae258ff774409d5a36cc22d0a8c29c35bd0"
+  integrity sha512-Egs051eTn+jywl4vqySypTAVaPOeIKqYnK8ACd7zFmSVXSvV0OdKELYm1DuztVaQiZNmtchF+dmTFocBMK5ntQ==
+  dependencies:
+    csstype "^2.6.7"
+
+jsxstyle@^2.4.0:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/jsxstyle/-/jsxstyle-2.5.1.tgz#53e9b435673857a19db59a70d95de918529387fd"
+  integrity sha512-JboG+WT/+O93e2+QjMi4orfBY97S6IPv541gJav2crCajvRM7X4Z+zXHoBfK5LRkGVzXrXllP/63kgupjhi88w==
+  dependencies:
+    jsxstyle-utils "^2.5.0"
 
 language-subtag-registry@~0.3.2:
   version "0.3.21"
@@ -4861,6 +4902,16 @@ postcss@8.2.15:
     colorette "^1.2.2"
     nanoid "^3.1.23"
     source-map "^0.6.1"
+
+preact-custom-element@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/preact-custom-element/-/preact-custom-element-4.2.1.tgz#a18752ef60823ea61199d9cdc1866e51139b3f46"
+  integrity sha512-/fiEEAyC+MXRlCBRmv/owoN5BLpO2nF/MF3YBHLtp4C2lNqlhV+a4he74A5DhfDoRmxDHm0sYVgQzWFEyzTDsw==
+
+preact@^10.5.5:
+  version "10.6.4"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.6.4.tgz#ad12c409ff1b4316158486e0a7b8d43636f7ced8"
+  integrity sha512-WyosM7pxGcndU8hY0OQlLd54tOU+qmG45QXj2dAYrL11HoyU/EzOSTlpJsirbBr1QW7lICxSsVJJmcmUglovHQ==
 
 prelude-ls@^1.2.1:
   version "1.2.1"

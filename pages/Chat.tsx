@@ -1,13 +1,24 @@
 import React, { useState, useContext, useEffect } from "react";
-
 import { GunContext } from "../src/components/GunProvider";
 import { IGunChainReference } from "gun/types/chain";
+import "gun/sea";
 
-type Message = { message: string; timestamp: number; uid: string };
+// const user = gun.user()
+// const user3 = user.auth("@yolo3", "1234abcd", (ack) => console.log("logged @yolo3", {ack}))
+// const user2 = user.auth("@yolo2", "1234abcd", (ack) => console.log("logged @yolo2", {ack}))
+// user3.get("alias").once(data => console.log("user3", data))
+// user2.get("alias").once(data => console.log("user2", data))
 
-// Generate one unique ID per user
+type Message = {
+  message: string;
+  timestamp: number;
+  uid: string;
+  from: string;
+};
+
 // TODO: rework this
-const uid = (() => {
+// Generate one unique ID per user
+const uidGenerator = () => {
   const s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -28,12 +39,16 @@ const uid = (() => {
     s4() +
     s4()
   );
-})();
+};
+
+const userUid = uidGenerator();
 
 export default function Chat(): React.ReactElement {
   const gun = useContext(GunContext);
+
   // current message typed by the user
   const [message, setMessage] = useState<string>("");
+  const [loaded, isLoaded] = useState(false);
   const [gunInstance, setGunInstance] = useState<null | IGunChainReference>(
     null
   );
@@ -42,9 +57,14 @@ export default function Chat(): React.ReactElement {
   const sendMessage = () => {
     if (!gunInstance) return;
 
-    const data = { message: message, timestamp: Date.now(), uid };
+    const data = {
+      message: message,
+      timestamp: Date.now(),
+      uid: uidGenerator(),
+      from: userUid,
+    };
 
-    gunInstance.get("chat").set(data);
+    gunInstance.get("message").set(data);
 
     // Clean the input and add the sent message to the local history
     setMessage("");
@@ -53,21 +73,28 @@ export default function Chat(): React.ReactElement {
 
   useEffect(() => {
     if (!gun) return;
+    if (loaded) return;
 
     const chatGunInstance = gun.get("chat");
 
-    chatGunInstance.on((data: Message) => {
-      // Don't add to the history if the message is from the user
-      console.log(data.uid === uid, data.uid);
-      if (data.uid === uid || !data.uid) return;
+    chatGunInstance
+      .get("message")
+      .map()
+      .on((data: Message) => {
+        console.log('received', data);
+        // Don't add to the history if the message is from the user
+        if (data.from === userUid) return;
 
-      console.log("message received", data);
-      setHistory((history) => [...history, data]);
-    });
-
+        setHistory((history) => {
+          if (history.find((message) => message.uid === data.uid))
+            return history;
+          return [...history, data];
+        });
+      });
     setGunInstance(chatGunInstance);
 
-    () => chatGunInstance.off();
+    isLoaded(true);
+    return () => chatGunInstance.off();
   }, [gun]);
 
   return (
@@ -87,8 +114,8 @@ export default function Chat(): React.ReactElement {
       <section>
         {history.length ? (
           <ul>
-            {history.map(({ message, timestamp }) => (
-              <li key={timestamp}>{message}</li>
+            {history.map(({ message }, index) => (
+              <li key={index}>{message}</li>
             ))}
           </ul>
         ) : (
