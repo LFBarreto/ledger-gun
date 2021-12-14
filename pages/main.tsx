@@ -2,7 +2,6 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import ChatWindow from "../src/components/ChatWindow";
-import Layout from "../src/components/Layout";
 import mock from "../src/types/mock";
 
 const Layout = dynamic(() => import("../src/components/Layout"), {
