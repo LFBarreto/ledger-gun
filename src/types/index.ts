@@ -32,6 +32,12 @@ export interface User {
   meta: MetaData;
 }
 
+export interface Room {
+  id: string;
+  name: string;
+  private: boolean;
+}
+
 export interface Message {
   id: string;
   from: UserID;
