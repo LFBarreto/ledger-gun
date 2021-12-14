@@ -1,45 +1,67 @@
-import React from "react";
-import styled from "@ledgerhq/react-ui/components/styled";
 import { Flex } from "@ledgerhq/react-ui";
-import { UserID, Message } from "../types";
+import React from "react";
+import styled from "styled-components";
+import Linkify from "linkify-react";
 
-const TextHolder = styled.div.attrs<{ textAlign: string }>({
-  color: "primary.c100",
-  flex: 1,
-})<{ textAlign: string }>`
-  text-align: ${(p) => p.textAlign};
-  width: auto;
-  height: 100%;
-  position: relative;
-  background-color: transparent;
-  border: none;
-  caret-color: currentColor;
-  height: auto;xc
-  text-decoration: none !important;
-  padding-right: 5px;
-  white-space: pre;
+import { Message } from "../types";
+
+const linkifyOptions = { defaultProtocol: "https", target: "_blank" };
+
+const TextBody = styled.div<{ isReverse: boolean }>`
+  color: ${(props) => props.theme.colors.primary.c100};
+  font-family: monospace;
+  font-size: 0.9rem;
+  border-${(props) => (props.isReverse ? "right" : "left")}: 2px solid ${(
+  props
+) => props.theme.colors.primary.c100};
+  padding: ${(props) => props.theme.space[4]}px;
+  margin-bottom: 2px;
+  white-space: pre-line;
 `;
 
-export default function MessageComponent({
-  userID,
+const UsernameText = styled(Flex)`
+  font-size: 0.9rem;
+  font-weight: 600;
+`;
+
+const DateText = styled(Flex)`
+  font-size: 0.7rem;
+  font-weight: 400;
+`;
+
+const MessageBox = ({
   message,
-  ...rest
-}: Partial<{
-  userID: UserID;
+  isReverse = false,
+  showUsername = true,
+}: {
   message: Message;
-}>): React.ReactElement {
+  isReverse: boolean;
+  showUsername: boolean;
+}): JSX.Element => {
   return (
-    <Flex
-      width="100%"
-      position="relative"
-      height="fit-content"
-      my={1}
-      className="message-gun"
-      {...rest}
-    >
-      <TextHolder textAlign={userID === message?.from ? "right" : "left"}>
-        {message?.message}
-      </TextHolder>
+    <Flex mb={4} flexDirection={isReverse ? "row-reverse" : "row"}>
+      <Flex ml={2} flexDirection={"column"}>
+        {showUsername && (
+          <UsernameText
+            color={"primary.c80"}
+            flexDirection={isReverse ? "row-reverse" : "row"}
+            mb={2}
+          >
+            {message.from}
+          </UsernameText>
+        )}
+        <TextBody isReverse={isReverse}>
+          <Linkify options={linkifyOptions}>{message.message}</Linkify>
+        </TextBody>
+        <DateText
+          color={"primary.c100"}
+          flexDirection={isReverse ? "row-reverse" : "row"}
+        >
+          {message.meta.creationDate.toLocaleTimeString()}
+        </DateText>
+      </Flex>
     </Flex>
   );
-}
+};
+
+export default MessageBox;

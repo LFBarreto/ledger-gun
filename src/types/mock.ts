@@ -659,4 +659,54 @@ export default {
       private: true,
     },
   ],
+  Messages: [
+    {
+      id: "c867809f-b090-4c60-b674-1f62b6812560",
+      from: "b25a2922",
+      message:
+        "Sit aut minima nihil.\n onsectetur mollitia volup aperiam praesentium.\n es quia a dolusto qui inventore consequatur libero quia sint est.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:10:55.830Z"),
+      },
+    },
+    {
+      id: "c867809f-b090-4c60-b674-qssqsqdsq",
+      from: "b25a2922",
+      message:
+        "Non rerum cupiditate qui autem aliquam facilis non pariatur consequatur.\nId aut quas sit totam deleniti consequuntur illum.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:10:56.830Z"),
+      },
+    },
+    {
+      id: "c867809f-b090-4c60-b674-42424242",
+      from: "b25a2922",
+      message: "Sit aut minima nih",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:11:00.830Z"),
+      },
+    },
+    {
+      id: "qsdsqddsq",
+      from: "sdqdsqqd",
+      message:
+        "Voluptatum aut tempore nostrum minima velit nihil nobis consectetur.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:12:55.830Z"),
+      },
+    },
+    {
+      id: "azzeffftg",
+      from: "sdqdsqqd",
+      message: "Non deleniti aut qui sequi saepe blanditiis.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:13:56.830Z"),
+      },
+    },
+  ],
 };
