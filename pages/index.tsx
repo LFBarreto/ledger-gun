@@ -4,9 +4,13 @@ import LedgerLiveApi, {
   deserializeTransaction,
 } from "@ledgerhq/live-app-sdk";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Button } from "@ledgerhq/react-ui";
+import { Text } from "@ledgerhq/react-ui";
+import AnimatedLogo from "../src/components/AnimatedLogo";
+import ChatWindow from "../src/components/ChatWindow";
+import { useTranslation } from "next-i18next";
 
 const DebugApp = (): React.ReactElement => {
+  const { t } = useTranslation();
   const api = useRef<LedgerLiveApi | null>(null);
   const [, setLastAnswer] = useState<any>(undefined);
   const [, setAnswerType] = useState<string>("none");
@@ -99,7 +103,7 @@ const DebugApp = (): React.ReactElement => {
         setAnswerType("error");
       }
     },
-    [account]
+    [account, setAccounts]
   );
 
   useEffect(() => {
@@ -114,27 +118,45 @@ const DebugApp = (): React.ReactElement => {
     };
   }, []);
 
+  const selectAccount = useCallback((acc) => {
+    setAccount(acc);
+    execute("message.sign", {
+      accountId: acc.id,
+      message: `${acc.address}`,
+    });
+  }, []);
+
+  const handleMessage = useCallback(
+    (message) => {
+      const index = +message.trim();
+      if (!isNaN(index)) {
+        if (accounts[index]) selectAccount(accounts[index]);
+      }
+    },
+    [selectAccount, accounts]
+  );
+
   return (
-    <div>
-      {accounts &&
-        accounts.map((acc: any) => {
-          return (
-            <div>
-              <Button
-                onClick={() => {
-                  setAccount(acc);
-                  execute("message.sign", {
-                    accountId: acc.id,
-                    message: `${acc.address}`,
-                  });
-                }}
-              >
-                {acc.name}
-              </Button>
-            </div>
-          );
-        })}
-    </div>
+    <ChatWindow onSubmitMessage={handleMessage}>
+      <AnimatedLogo
+        choices={
+          accounts.length
+            ? accounts.map((acc: any, index: number) => {
+                return () => (
+                  <Text
+                    color="primary.c100"
+                    onClick={() => {
+                      selectAccount(acc);
+                    }}
+                  >
+                    {acc.name} ~:[{index}]
+                  </Text>
+                );
+              })
+            : [() => <Text color="primary.c100">{t("noAccounts")}</Text>]
+        }
+      />
+    </ChatWindow>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { keyframes } from "styled-components";
 import styled from "@ledgerhq/react-ui/components/styled";
 import { Flex } from "@ledgerhq/react-ui";
@@ -111,6 +111,8 @@ export default function ChatInput({
     },
     [value, onSubmit]
   );
+
+  useEffect(() => setValue(defaultValue), [defaultValue]);
 
   return (
     <Flex position="relative" height="fit-content" {...rest}>
