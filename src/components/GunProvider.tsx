@@ -8,7 +8,7 @@ const GunProvider = ({
   children,
 }: {
   children: React.ReactNode;
-}): React.ReactNode => {
+}): React.ReactElement => {
   const [gun, setGunInstance] = React.useState<null | IGunChainReference>(null);
 
   useEffect(() => {
