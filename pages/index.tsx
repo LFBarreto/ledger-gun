@@ -3,15 +3,13 @@ import LedgerLiveApi, {
   WindowMessageTransport,
   deserializeTransaction,
 } from "@ledgerhq/live-app-sdk";
-import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Button } from "@ledgerhq/react-ui";
 
 const DebugApp = (): React.ReactElement => {
   const api = useRef<LedgerLiveApi | null>(null);
-  const { t } = useTranslation("common");
-  const [lastAnswer, setLastAnswer] = useState<any>(undefined);
-  const [answerType, setAnswerType] = useState<string>("none");
+  const [, setLastAnswer] = useState<any>(undefined);
+  const [, setAnswerType] = useState<string>("none");
   const [accounts, setAccounts] = useState<any>([]);
   const [account, setAccount] = useState<any>(null);
 
