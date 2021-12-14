@@ -1,14 +1,14 @@
 import { Account, Transaction } from "@ledgerhq/live-app-sdk";
 
-type UserID = string;
+export type UserID = string;
 
-type CurrencyID = "ethereum" | "bitcoin";
+export type CurrencyID = "ethereum" | "bitcoin";
 
-interface MetaData {
+export interface MetaData {
   creationDate: Date;
 }
 
-interface File {
+export interface File {
   id: string;
   url: string;
   mimeType: string;
@@ -16,13 +16,12 @@ interface File {
   meta: MetaData;
 }
 
-interface Data {
+export interface Data {
   files?: File[];
   transaction?: Transaction;
 }
 
-// @ts-expect-error unused for now
-interface User {
+export interface User {
   id: UserID;
   alias: string;
   account: Account;
@@ -33,7 +32,13 @@ interface User {
   meta: MetaData;
 }
 
-interface Message {
+export interface Room {
+  id: string;
+  name: string;
+  private: boolean;
+}
+
+export interface Message {
   id: string;
   from: UserID;
   message: string;
@@ -41,8 +46,7 @@ interface Message {
   meta: MetaData;
 }
 
-// @ts-expect-error unused for now
-interface Channel {
+export interface Channel {
   id: string;
   name: string;
   users: UserID[];
