@@ -66,21 +66,16 @@ const TextHolder = styled.div.attrs({ color: "primary.c100", flex: 1 })`
 `;
 
 const ENTER_KEY_CODE = 13;
-const SHIFT_KEY_CODE = 16;
 
 export default function ChatInput({
   defaultValue = "",
-  onChange = (v) => {
-    return;
-  },
-  onSubmit = (v) => {
-    return;
-  },
+  onChange,
+  onSubmit,
   ...rest
 }: Partial<{
   defaultValue: string;
-  onChange: (val: string) => void;
-  onSubmit: (val: string) => void;
+  onChange?: (val?: string) => void;
+  onSubmit?: (val?: string) => void;
 }>): React.ReactElement {
   const [value, setValue] = useState(defaultValue);
   const [submited, setSubmited] = useState(false);
@@ -89,7 +84,7 @@ export default function ChatInput({
       if (submited) {
         setSubmited(false);
       } else {
-        onChange(evt.target.value);
+        onChange && onChange(evt.target.value);
         setValue(evt.target.value);
       }
     },
@@ -100,7 +95,7 @@ export default function ChatInput({
     ({ keyCode, shiftKey }) => {
       if (keyCode == ENTER_KEY_CODE && !shiftKey) {
         // handl submit !shift + enter
-        onSubmit(value);
+        onSubmit && onSubmit(value);
         setValue("");
         setSubmited(true);
       }
