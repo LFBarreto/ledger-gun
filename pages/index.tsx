@@ -57,24 +57,6 @@ const DebugApp = (): React.ReactElement => {
     [handleSignMessage, accounts]
   );
 
-  const selectAccount = useCallback((acc) => {
-    setAccount(acc);
-    execute("message.sign", {
-      accountId: acc.id,
-      message: `${acc.address}`,
-    });
-  }, []);
-
-  const handleMessage = useCallback(
-    (message) => {
-      const index = +message.trim();
-      if (!isNaN(index)) {
-        if (accounts[index]) selectAccount(accounts[index]);
-      }
-    },
-    [selectAccount, accounts]
-  );
-
   return (
     <ChatWindow onSubmitMessage={handleMessage}>
       <AnimatedLogo
