@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { keyframes } from "styled-components";
 import styled from "@ledgerhq/react-ui/components/styled";
 import { Flex } from "@ledgerhq/react-ui";
+import CommandTooltip from "./CommandTooltip";
 
 const blink = keyframes`
   0% {
@@ -79,6 +80,7 @@ export default function ChatInput({
 }>): React.ReactElement {
   const [value, setValue] = useState(defaultValue);
   const [submited, setSubmited] = useState(false);
+  const [selectedCommand, setSelectedCommand] = useState<string | null>(null);
   const handleChange = useCallback(
     (evt) => {
       if (submited) {
@@ -91,13 +93,17 @@ export default function ChatInput({
     [onChange, submited]
   );
 
+  const typingCommand = useMemo(() => value.startsWith("/") && !value.includes(" "), [value]);
+
   const handleSubmit = useCallback(
     ({ keyCode, shiftKey }) => {
       if (keyCode == ENTER_KEY_CODE && !shiftKey) {
         // handl submit !shift + enter
-        onSubmit && onSubmit(value);
-        setValue("");
-        setSubmited(true);
+        if (!typingCommand) {
+          onSubmit && onSubmit(value);
+          setValue("");
+          setSubmited(true);
+        }
       }
     },
     [value, onSubmit]
@@ -105,16 +111,18 @@ export default function ChatInput({
 
   return (
     <Flex position="relative" height="fit-content" {...rest}>
-      <BaseInput
-        autoFocus
-        spellCheck="false"
-        value={value}
-        onKeyDown={handleSubmit}
-        onChange={handleChange}
-      />
+      <BaseInput autoFocus spellCheck="false" value={value} onKeyDown={handleSubmit} onChange={handleChange} />
       <TextHolder>
         {value}
         <Caret />
+        {typingCommand && (
+          <CommandTooltip
+            message={value}
+            selectedCommand={selectedCommand}
+            setSelectedCommand={setSelectedCommand}
+            enterCommand={setValue}
+          />
+        )}
       </TextHolder>
     </Flex>
   );
