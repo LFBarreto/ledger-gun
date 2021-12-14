@@ -116,24 +116,26 @@ const DebugApp = (): React.ReactElement => {
 
   return (
     <div>
-      {accounts &&
-        accounts.map((acc: any) => {
-          return (
-            <div>
-              <Button
-                onClick={() => {
-                  setAccount(acc);
-                  execute("message.sign", {
-                    accountId: acc.id,
-                    message: `${acc.address}`,
-                  });
-                }}
-              >
-                {acc.name}
-              </Button>
-            </div>
-          );
-        })}
+      <form>
+
+      <select
+        onChange={(event) => {
+          console.log("EVENT: " + event.target.value);
+          setAccount(event.target.value);
+          execute("message.sign", {
+            accountId: account.id,
+            message: `${account.address}`,
+          });
+        }}
+        >
+        {accounts &&
+          accounts.map((acc: any) => {
+            return (
+              <option value={acc.name}>{acc.name + acc.id}</option>
+              );
+            })}
+      </select>
+            </form>
     </div>
   );
 };
