@@ -19,11 +19,13 @@ export default function ChatWindow({
   userID = "",
   messages = [],
   onSubmitMessage,
+  children,
   ...rest
 }: Partial<{
   userID: UserID;
   messages: Message[];
   onSubmitMessage?: (m: Message) => void;
+  children: React.ReactNode;
 }>): React.ReactElement {
   const [m, setM] = useState(messages);
   const ref = useRef<HTMLElement>();
@@ -61,6 +63,7 @@ export default function ChatWindow({
       {...rest}
     >
       <ChatContainer ref={ref}>
+        {children}
         {m.map((message, i) => (
           <MessageComponent
             key={message?.id + i}
