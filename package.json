@@ -16,7 +16,7 @@
   "dependencies": {
     "@giphy/js-fetch-api": "^4.1.2",
     "@giphy/react-components": "^5.4.0",
-    "@ledgerhq/live-app-sdk": "git+ssh://git@github.com:LedgerHQ/live-app-sdk.git#add-sign-message",
+    "@ledgerhq/live-app-sdk": "LedgerHQ/live-app-sdk#add-sign-message",
     "@ledgerhq/react-ui": "^0.6.0",
     "@types/lodash": "^4.14.178",
     "ace-builds": "^1.4.12",
