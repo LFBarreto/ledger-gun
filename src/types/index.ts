@@ -26,6 +26,7 @@ export interface User {
   alias: string;
   account: Account;
   currency: CurrencyID;
+  followed: UserID[];
   followers: UserID[];
   blackList: UserID[];
   data: Data;
