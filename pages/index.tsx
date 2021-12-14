@@ -1,40 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import LedgerLiveApi, { WindowMessageTransport } from "@ledgerhq/live-app-sdk";
+import React, { useEffect, useState } from "react";
 import type { Account } from "@ledgerhq/live-app-sdk";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Button } from "@ledgerhq/react-ui";
+import { useApi } from "../src/providers/LedgerLiveSDKProvider";
 
 const DebugApp = (): React.ReactElement => {
-  const api = useRef<LedgerLiveApi | null>(null);
+  const api = useApi();
   const [accounts, setAccounts] = useState<any>([]);
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
 
   useEffect(() => {
-    const llapi = new LedgerLiveApi(new WindowMessageTransport());
-    api.current = llapi;
-
-    llapi.connect();
-
     const initAccounts = async () => {
-      const availableAccounts = await llapi.listAccounts();
+      const availableAccounts = await api.listAccounts();
       setAccounts(availableAccounts);
     };
 
     initAccounts();
-
-    return () => {
-      api.current = null;
-      void llapi.disconnect();
-    };
   }, []);
 
   const handleSignMessage = async (account: Account) => {
-    if (!api.current) {
-      return;
-    }
-
     try {
-      const res = await api.current.signMessage({
+      const res = await api.signMessage({
         accountId: account.id,
         message: `${account.address}`,
       });
