@@ -3,7 +3,8 @@ import SplitPane from "react-split-pane";
 import styled from "styled-components";
 
 import { Room, User } from "../types";
-import SideBar, { Button } from "./SideBar";
+import SideBar from "./SideBar";
+import Button from "./Button";
 
 const Container = styled.main`
   height: 100%;
