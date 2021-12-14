@@ -4,6 +4,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { appWithTranslation } from "next-i18next";
 import { StyleProvider } from "../src/styles/StyleProvider";
+import GunProvider from "../src/components/GunProvider";
 import "modern-normalize";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
@@ -22,7 +23,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <title>Ledger Gun</title>
       </Head>
       <StyleProvider selectedPalette={v3SelectedPalettes}>
-        <Component {...pageProps} />
+        <GunProvider>
+          <Component {...pageProps} />
+        </GunProvider>
       </StyleProvider>
     </>
   );
