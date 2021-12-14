@@ -8,7 +8,10 @@ let user: any;
 
 const useGun = () => {
   useEffect(() => {
-    gun = Gun();
+    gun = Gun([
+      "http://localhost:3000/gun",
+      "https://ledger-gun.vercel.app/gun",
+    ]);
     user = gun.user().recall({ sessionStorage: true });
     gun.on("auth", (...args: any) => console.log("on auth", ...args));
     return () => gun.off();
