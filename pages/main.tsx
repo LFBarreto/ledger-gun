@@ -15,7 +15,7 @@ export default function Main(): React.ReactElement {
 
   return (
     <Layout user={user as any} rooms={rooms}>
-      <ChatWindow userID={user.alias} messages={messages} />
+      <ChatWindow userID={user.alias} messages={messages as any} />
     </Layout>
   );
 }
