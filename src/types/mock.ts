@@ -473,8 +473,7 @@ export default {
   Users: [
     {
       id: "316b5e83-1ca1-46a5-ba66-97240ec295b4",
-      alias:
-        "Voluptatibus commodi minus illum deserunt et rerum dignissimos id.\nDignissimos nisi voluptatem dolorem debitis excepturi suscipit nihil aperiam placeat.\nFugiat vero atque omnis non totam occaecati.",
+      alias: "Mr. Portefeuille",
       account: {},
       currency: "ethereum",
       followers: [
@@ -755,6 +754,48 @@ export default {
       meta: {
         creationDate: "corporis",
       },
+    },
+  ],
+  Rooms: [
+    {
+      id: "R001",
+      name: "ledger-gun",
+      private: true,
+    },
+    {
+      id: "R002",
+      name: "ledger-live",
+      private: false,
+    },
+    {
+      id: "R003",
+      name: "live-faucet",
+      private: true,
+    },
+    {
+      id: "R004",
+      name: "live-dev",
+      private: false,
+    },
+    {
+      id: "R005",
+      name: "cats",
+      private: true,
+    },
+    {
+      id: "R006",
+      name: "bardak",
+      private: false,
+    },
+    {
+      id: "R007",
+      name: "general",
+      private: false,
+    },
+    {
+      id: "R008",
+      name: "internal-announcements",
+      private: true,
     },
   ],
 };
