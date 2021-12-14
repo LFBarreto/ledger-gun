@@ -22,6 +22,37 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     display: flex;
     padding: ${(p) => p.theme.space[3]}px;
+    line-height: ${(p) => p.theme.space[6]}px;
+  }
+
+  ::spelling-error  {
+    text-decoration: none;
+  }
+
+    /* width */
+  ::-webkit-scrollbar {
+    width: ${(p) => p.theme.space[2]}px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: ${(p) => p.theme.colors.primary.c80};
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${(p) => p.theme.colors.primary.c100};
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   @font-face {
