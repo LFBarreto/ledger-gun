@@ -9,8 +9,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: Inter;
-    font-size: 100%;
+    font-family: monospace;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
     width: 100%;
     height: 100%;
     background-color: ${(p) => p.theme.colors.background.main};
@@ -22,7 +23,6 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     display: flex;
     padding: ${(p) => p.theme.space[3]}px;
-    line-height: ${(p) => p.theme.space[6]}px;
   }
 
   ::spelling-error  {
