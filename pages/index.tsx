@@ -119,15 +119,18 @@ const DebugApp = (): React.ReactElement => {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          console.log("EVENT: " + event.target.value);
-          // setAccount(event.target.value);
-          // execute("message.sign", {
-          //   accountId: account.id,
-          //   message: `${account.address}`,
-          // });
+          execute("message.sign", {
+            accountId: account.id,
+            message: `${account.address}`,
+          });
         }}
       >
-        <select>
+        <select
+          onChange={(event) => {
+            setAccount(event.target.value);
+            console.log(account);
+          }}
+        >
           {accounts &&
             accounts.map((acc: any) => {
               return (
@@ -137,7 +140,7 @@ const DebugApp = (): React.ReactElement => {
               );
             })}
         </select>
-        <button type="submit">Click me</button>
+        <input type="submit" value="Sign" />
       </form>
     </div>
   );
