@@ -1,6 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
+import ChatWindow from "../src/components/ChatWindow";
 import mock from "../src/types/mock";
 import { User } from "../src/types";
 
@@ -14,10 +15,11 @@ export default function Main({
   user: User;
 }): React.ReactElement {
   const rooms = mock.Rooms;
+  const messages = mock.Channels[1].messages;
 
   return (
     <Layout user={user as any} rooms={rooms}>
-      <div />
+      <ChatWindow userID={user.alias} messages={messages as any} />
     </Layout>
   );
 }
