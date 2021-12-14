@@ -7,8 +7,8 @@ type Message = { message: string; timestamp: number; uid: string };
 
 // Generate one unique ID per user
 // TODO: rework this
-let uid = (() => {
-  let s4 = () => {
+const uid = (() => {
+  const s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1);
@@ -34,7 +34,9 @@ export default function Chat(): React.ReactElement {
   const gun = useContext(GunContext);
   // current message typed by the user
   const [message, setMessage] = useState<string>("");
-  const [gunInstance, setGunInstance] = useState<null | IGunChainReference>(null);
+  const [gunInstance, setGunInstance] = useState<null | IGunChainReference>(
+    null
+  );
   const [history, setHistory] = useState<Message[]>([]);
 
   const sendMessage = () => {
@@ -56,13 +58,16 @@ export default function Chat(): React.ReactElement {
 
     chatGunInstance.on((data: Message) => {
       // Don't add to the history if the message is from the user
-      if (data.uid === uid) return;
+      console.log(data.uid === uid, data.uid);
+      if (data.uid === uid || !data.uid) return;
 
       console.log("message received", data);
       setHistory((history) => [...history, data]);
     });
 
     setGunInstance(chatGunInstance);
+
+    () => chatGunInstance.off();
   }, [gun]);
 
   return (
@@ -82,8 +87,8 @@ export default function Chat(): React.ReactElement {
       <section>
         {history.length ? (
           <ul>
-            {history.map(({ message, uid }) => (
-              <li key={uid}>{message}</li>
+            {history.map(({ message, timestamp }) => (
+              <li key={timestamp}>{message}</li>
             ))}
           </ul>
         ) : (
