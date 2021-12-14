@@ -12,7 +12,9 @@ const GunProvider = ({
   const [gun, setGunInstance] = React.useState<null | IGunChainReference>(null);
 
   useEffect(() => {
-    const gunInstance = Gun(["https://ledger-gun.vercel.app"]);
+    const gunInstance = Gun([
+      "https://ledger-gun-git-gun-network-2-lfbarreto.vercel.app",
+    ]);
     setGunInstance(gunInstance);
   }, []);
 
