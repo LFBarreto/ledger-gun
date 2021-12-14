@@ -24,7 +24,8 @@ const CommandItem = styled.div<{ selected: boolean }>`
   width: 100%;
   display: flex;
   align-items: start;
-  background-color: ${(p) => (p.selected ? p.theme.colors.primary.c100 : "unset")};
+  background-color: ${(p) =>
+    p.selected ? p.theme.colors.primary.c100 : "unset"};
   color: ${(p) => (p.selected ? "black" : "unset")};
   padding: 5px;
 `;
@@ -41,8 +42,15 @@ const hardcodedCommands = [
   { command: "/giphy", description: "Send gif to the recipient" },
 ];
 
-const CommandTooltip = ({ message, selectedCommand, setSelectedCommand, enterCommand }: CommandTooltipProps) => {
-  const filteredCommands = hardcodedCommands.filter(({ command }) => command.startsWith(message));
+const CommandTooltip = ({
+  message,
+  selectedCommand,
+  setSelectedCommand,
+  enterCommand,
+}: CommandTooltipProps) => {
+  const filteredCommands = hardcodedCommands.filter(({ command }) =>
+    command.startsWith(message)
+  );
 
   useEffect(() => {
     if (filteredCommands.length) {
@@ -60,8 +68,13 @@ const CommandTooltip = ({ message, selectedCommand, setSelectedCommand, enterCom
 
       if (filteredCommands.length < 2 || selectedCommand === null) return;
 
-      const currentCommandIndex = filteredCommands.findIndex(({ command }) => selectedCommand === command);
-      if (e.key === "ArrowDown" && currentCommandIndex < filteredCommands.length - 1) {
+      const currentCommandIndex = filteredCommands.findIndex(
+        ({ command }) => selectedCommand === command
+      );
+      if (
+        e.key === "ArrowDown" &&
+        currentCommandIndex < filteredCommands.length - 1
+      ) {
         setSelectedCommand(filteredCommands[currentCommandIndex + 1].command);
         return;
       }

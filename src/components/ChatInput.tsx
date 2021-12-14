@@ -93,7 +93,10 @@ export default function ChatInput({
     [onChange, submited]
   );
 
-  const typingCommand = useMemo(() => value.startsWith("/") && !value.includes(" "), [value]);
+  const typingCommand = useMemo(
+    () => value.startsWith("/") && !value.includes(" "),
+    [value]
+  );
 
   const handleSubmit = useCallback(
     ({ keyCode, shiftKey }) => {
@@ -111,7 +114,13 @@ export default function ChatInput({
 
   return (
     <Flex position="relative" height="fit-content" {...rest}>
-      <BaseInput autoFocus spellCheck="false" value={value} onKeyDown={handleSubmit} onChange={handleChange} />
+      <BaseInput
+        autoFocus
+        spellCheck="false"
+        value={value}
+        onKeyDown={handleSubmit}
+        onChange={handleChange}
+      />
       <TextHolder>
         {value}
         <Caret />
