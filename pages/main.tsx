@@ -10,7 +10,7 @@ export default function Main(): React.ReactElement {
   return (
     <div>
       <SideBar
-        user={user}
+        user={user as any}
         rooms={rooms}
         onSelect={() => null}
         onCreate={() => null}
