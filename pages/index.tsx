@@ -50,23 +50,35 @@ const DebugApp = (): React.ReactElement => {
   return (
     <div>
       <div>Selected account: {selectedAccount?.name || "N/A"}</div>
-      <div>
+      <select
+        onChange={(event) => {
+          const account = accounts.find(
+            (account: any) => account.id === event.target.value
+          );
+          setSelectedAccount(account);
+        }}
+      >
         {accounts &&
           accounts.map((acc: any) => {
             return (
-              <div>
-                <Button
-                  onClick={() => {
-                    setSelectedAccount(acc);
-                    handleSignMessage(acc);
-                  }}
-                >
-                  {acc.name}
-                </Button>
-              </div>
+              <option key={acc.address} value={acc.id}>
+                {acc.name}
+              </option>
             );
           })}
-      </div>
+      </select>
+      <Button
+        disabled={!selectedAccount}
+        onClick={() => {
+          if (!selectedAccount) {
+            return;
+          }
+
+          handleSignMessage(selectedAccount);
+        }}
+      >
+        Sign in
+      </Button>
     </div>
   );
 };
