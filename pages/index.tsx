@@ -56,7 +56,7 @@ const DebugApp = (): React.ReactElement => {
           try {
             // @ts-expect-error to update
             action = api.current._request("message.sign", {
-              accountId: account.id,
+              accountId: payload.accountId,
               message: payload.message,
               params: payload?.params || {},
             });
@@ -125,7 +125,10 @@ const DebugApp = (): React.ReactElement => {
               <Button
                 onClick={() => {
                   setAccount(acc);
-                  execute("message.sign", { message: `${acc.address}` });
+                  execute("message.sign", {
+                    accountId: acc.id,
+                    message: `${acc.address}`,
+                  });
                 }}
               >
                 {acc.name}
