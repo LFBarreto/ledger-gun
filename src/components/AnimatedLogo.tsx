@@ -117,22 +117,24 @@ export default function AnimatedLogo({ choices = [] }: any) {
   const totalFrames = count * loopTimer;
 
   const startLoopChoices = useCallback(() => {
-    index = 0;
-    frame = 0;
+    let index2 = 0;
     const int = setInterval(() => {
-      if (!choices[index]) {
+      if (!choices[index2]) {
         clearInterval(int);
       } else {
-        setC((cc) => cc.concat(choices[index]));
-        index++;
+        setC((cc) => cc.concat(choices[index2]));
+        index2++;
       }
     }, 200);
-  }, []);
+  }, [choices]);
+
+  useEffect(() => {
+    choices.length && startLoopChoices();
+  }, [choices]);
 
   const start = useCallback(() => {
     const int = setInterval(() => {
       if (!array[index]) {
-        startLoopChoices();
         clearInterval(int);
       } else {
         if (frame >= totalFrames) {

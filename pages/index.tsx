@@ -1,160 +1,77 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import LedgerLiveApi, {
-  WindowMessageTransport,
-  deserializeTransaction,
-} from "@ledgerhq/live-app-sdk";
+import React, { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/router";
+import type { Account } from "@ledgerhq/live-app-sdk";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useApi } from "../src/providers/LedgerLiveSDKProvider";
 import { Text } from "@ledgerhq/react-ui";
 import AnimatedLogo from "../src/components/AnimatedLogo";
 import ChatWindow from "../src/components/ChatWindow";
-import { useTranslation } from "next-i18next";
+// import { useTranslation } from "next-i18next";
+import useGun from "../src/hooks/useGun";
 
 const DebugApp = (): React.ReactElement => {
-  const { t } = useTranslation();
-  const api = useRef<LedgerLiveApi | null>(null);
-  const [, setLastAnswer] = useState<any>(undefined);
-  const [, setAnswerType] = useState<string>("none");
+  // const { t } = useTranslation();
+  const api = useApi();
+  const { createUser } = useGun();
   const [accounts, setAccounts] = useState<any>([]);
-  const [account, setAccount] = useState<any>(null);
-
-  const execute = useCallback(
-    async (method, payload) => {
-      if (!api.current) {
-        return;
-      }
-
-      let action;
-      switch (method) {
-        case "account.list":
-          action = api.current.listAccounts();
-          break;
-        case "account.request":
-          try {
-            action = api.current.requestAccount(payload);
-          } catch (error) {
-            action = Promise.reject(error);
-          }
-          break;
-        case "account.receive":
-          if (account) {
-            action = api.current.receive(account.id);
-          } else {
-            action = Promise.reject(new Error("No accountId selected"));
-          }
-          break;
-        case "transaction.sign":
-          try {
-            const transaction = deserializeTransaction(payload.transaction);
-            action = api.current.signTransaction(
-              account.id,
-              transaction,
-              payload?.params
-            );
-          } catch (error) {
-            action = Promise.reject(error);
-          }
-          break;
-        case "message.sign":
-          try {
-            // @ts-expect-error to update
-            action = api.current._request("message.sign", {
-              accountId: payload.accountId,
-              message: payload.message,
-              params: payload?.params || {},
-            });
-          } catch (error) {
-            action = Promise.reject(error);
-          }
-          break;
-        case "transaction.broadcast":
-          try {
-            const rawSignedTransaction = payload;
-            action = api.current.broadcastSignedTransaction(
-              account.id,
-              rawSignedTransaction
-            );
-          } catch (error) {
-            action = Promise.reject(error);
-          }
-          break;
-        case "currency.list":
-          try {
-            action = api.current.listCurrencies(payload);
-          } catch (error) {
-            action = Promise.reject(error);
-          }
-          break;
-        default:
-          action = Promise.resolve();
-      }
-
-      try {
-        setAnswerType("pending");
-        setLastAnswer("Waiting...");
-        const result = await action;
-        setAnswerType("success");
-        setLastAnswer(result);
-        if (method === "account.list") {
-          setAccounts(result);
-        }
-      } catch (err: any) {
-        setLastAnswer({ message: err.message });
-        console.error(err);
-        setAnswerType("error");
-      }
-    },
-    [account, setAccounts]
-  );
+  const router = useRouter();
 
   useEffect(() => {
-    const llapi = new LedgerLiveApi(new WindowMessageTransport());
-    api.current = llapi;
-
-    llapi.connect();
-    execute("account.list", undefined);
-    return () => {
-      api.current = null;
-      void llapi.disconnect();
+    const initAccounts = async () => {
+      const availableAccounts = await api?.listAccounts();
+      console.log(availableAccounts);
+      setAccounts(availableAccounts);
     };
-  }, []);
 
-  const selectAccount = useCallback((acc) => {
-    setAccount(acc);
-    execute("message.sign", {
-      accountId: acc.id,
-      message: `${acc.address}`,
-    });
-  }, []);
+    initAccounts();
+  }, [setAccounts]);
+
+  const handleSignMessage = async (account: Account) => {
+    try {
+      // @ts-expect-error error
+      const res = await api._request("message.sign", {
+        accountId: account.id,
+        message: `${account.address}`,
+      });
+
+      if (res) {
+        const user = await createUser(account.id, res);
+        if (user) router.push("/main");
+      }
+
+      // FIXME: this will be the "password", and `account.address` will be the login
+      console.log({ res });
+    } catch (error) {
+      // FIXME: handle error (for example user canceled signature)
+      console.error(error);
+    }
+  };
 
   const handleMessage = useCallback(
     (message) => {
       const index = +message.trim();
       if (!isNaN(index)) {
-        if (accounts[index]) selectAccount(accounts[index]);
+        if (accounts[index]) handleSignMessage(accounts[index]);
       }
     },
-    [selectAccount, accounts]
+    [handleSignMessage, accounts]
   );
 
   return (
     <ChatWindow onSubmitMessage={handleMessage}>
       <AnimatedLogo
-        choices={
-          accounts.length
-            ? accounts.map((acc: any, index: number) => {
-                return () => (
-                  <Text
-                    color="primary.c100"
-                    onClick={() => {
-                      selectAccount(acc);
-                    }}
-                  >
-                    {acc.name} ~:[{index}]
-                  </Text>
-                );
-              })
-            : [() => <Text color="primary.c100">{t("noAccounts")}</Text>]
-        }
+        choices={accounts.map((acc: any, index: number) => {
+          return () => (
+            <Text
+              color="primary.c100"
+              onClick={() => {
+                handleSignMessage(acc);
+              }}
+            >
+              {acc.name} ~:[{index}]
+            </Text>
+          );
+        })}
       />
     </ChatWindow>
   );

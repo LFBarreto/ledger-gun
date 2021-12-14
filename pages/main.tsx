@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
-
+import { useRouter } from "next/router";
 import ChatWindow from "../src/components/ChatWindow";
 import mock from "../src/types/mock";
-import { User } from "../src/types";
+import useGun from "../src/hooks/useGun";
 
 const Layout = dynamic(() => import("../src/components/Layout"), {
   ssr: false,
@@ -12,10 +12,16 @@ const Layout = dynamic(() => import("../src/components/Layout"), {
 export default function Main({
   user = mock.Users[0],
 }: {
-  user: User;
+  user: any;
 }): React.ReactElement {
   const rooms = mock.Rooms;
   const messages = mock.Messages;
+  const router = useRouter();
+  const { isLogged } = useGun();
+
+  useEffect(() => {
+    if (!isLogged()) router.push("/");
+  }, []);
 
   return (
     <Layout user={user as any} rooms={rooms}>

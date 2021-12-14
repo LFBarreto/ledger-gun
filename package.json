@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "server": "node server",
     "build": "next build",
     "start": "next start",
     "format:check": "prettier --check 'src/**' 'pages/**'",
