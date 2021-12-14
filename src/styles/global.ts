@@ -9,8 +9,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: Inter;
-    font-size: 100%;
+    font-family: monospace;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
     width: 100%;
     height: 100%;
     background-color: ${(p) => p.theme.colors.background.main};
@@ -22,6 +23,36 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     display: flex;
     padding: ${(p) => p.theme.space[3]}px;
+  }
+
+  ::spelling-error  {
+    text-decoration: none;
+  }
+
+    /* width */
+  ::-webkit-scrollbar {
+    width: ${(p) => p.theme.space[2]}px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: ${(p) => p.theme.colors.primary.c80};
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${(p) => p.theme.colors.primary.c100};
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   @font-face {

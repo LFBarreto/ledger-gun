@@ -473,64 +473,25 @@ export default {
   Users: [
     {
       id: "316b5e83-1ca1-46a5-ba66-97240ec295b4",
-      alias:
-        "Voluptatibus commodi minus illum deserunt et rerum dignissimos id.\nDignissimos nisi voluptatem dolorem debitis excepturi suscipit nihil aperiam placeat.\nFugiat vero atque omnis non totam occaecati.",
+      alias: "Mr. Portefeuille",
       account: {},
       currency: "ethereum",
+      followed: [
+        "88da2cd3-0b50-4916-bdf2-6338da523d5d",
+        "6ac8a193-2ef4-4e53-ac64-9da5c2fbe5e6",
+        "119039e3-6897-4b35-8d3d-69686d23855d",
+      ],
       followers: [
-        {
-          id: "88da2cd3-0b50-4916-bdf2-6338da523d5d",
-          alias:
-            "Qui quae quas ut est molestiae reprehenderit ipsum minima. Omnis velit facilis vitae quibusdam autem. Eum voluptatum qui voluptates omnis temporibus perferendis voluptatem. Eligendi perferendis debitis.",
-        },
-        {
-          id: "6ac8a193-2ef4-4e53-ac64-9da5c2fbe5e6",
-          alias: "blanditiis",
-        },
-        {
-          id: "119039e3-6897-4b35-8d3d-69686d23855d",
-          alias: "eius totam voluptate",
-        },
-        {
-          id: "98c65c14-3f71-45f2-a553-47fd319f6971",
-          alias:
-            "Natus consequatur occaecati vitae. Modi fugiat ad porro iusto aut harum dolore velit et. Unde dolor veniam. Labore corrupti reprehenderit. Est ex ut distinctio et voluptatum consequatur nemo dolorum.",
-        },
+        "6ac8a193-2ef4-4e53-ac64-9da5c2fbe5e6",
+        "119039e3-6897-4b35-8d3d-69686d23855d",
+        "98c65c14-3f71-45f2-a553-47fd319f6971",
       ],
       blackList: [
-        {
-          id: "f770ed64-62a1-4669-87e3-6db9cbfa3a3c",
-          alias:
-            "Quod voluptatem ut reiciendis aut. Est voluptas est ea aut quas et aut numquam.",
-        },
-        {
-          id: "baf38e3d-c7aa-4c00-94fa-4b3f1c7b5d60",
-          alias:
-            "Vero omnis dolore unde ea unde voluptatum illo eius perspiciatis.\nVeritatis ea sunt distinctio sapiente officia.",
-        },
-        {
-          id: "4e53e197-451b-4260-823e-b00a3aef9ea0",
-          alias:
-            "Debitis enim dolores eum laborum. Amet itaque animi. Et esse doloribus necessitatibus.\n \rTemporibus delectus delectus porro et fugiat similique culpa saepe voluptas. Voluptatum aut facilis deserunt ducimus et sint sit consequatur. Sit qui soluta aut quaerat vel asperiores.\n \rDelectus iste et. Dolorum voluptas error voluptatum autem totam aut omnis. Assumenda et omnis voluptas. Dolor aut quas aut officiis sit ipsa non repellendus numquam. Earum et rerum aperiam quam sapiente ex. Vero voluptatem sunt nulla et eveniet hic enim.",
-        },
-        {
-          id: "134b5245-01c1-429d-907d-d09a5e3caf66",
-          alias: "quas",
-        },
-        {
-          id: "60daf061-5417-4558-95c3-141628ea7c40",
-          alias:
-            "Odio voluptas sed sapiente. Vitae dolore ipsa aliquid et architecto porro consequatur dolor eum. Inventore et provident ut rerum accusantium voluptatem maxime. Et eligendi in aut corrupti et modi tempore officia.\n \rCupiditate quod quisquam nesciunt qui dolores corrupti sed sit et. Et dolore exercitationem. Earum ut qui necessitatibus inventore maiores dolorem. Tempore illum qui mollitia quo nostrum dolores pariatur. Dolores iure voluptates cupiditate.\n \rEt voluptatem omnis. Non rerum autem aut dolorem ipsa perferendis commodi. Quisquam rerum totam enim corporis explicabo quibusdam occaecati iure harum.",
-        },
-        {
-          id: "92fd4d77-0a1e-48c6-92d4-43e87a6917d5",
-          alias: "et",
-        },
-        {
-          id: "05c9c505-9414-43eb-a75c-959a3c9a36a6",
-          alias:
-            "Vel saepe aut quaerat facilis. Facilis omnis delectus. Ad quis qui quo cum quis.",
-        },
+        "f770ed64-62a1-4669-87e3-6db9cbfa3a3c",
+        "baf38e3d-c7aa-4c00-94fa-4b3f1c7b5d60",
+        "4e53e197-451b-4260-823e-b00a3aef9ea0",
+        "134b5245-01c1-429d-907d-d09a5e3caf66",
+        "60daf061-5417-4558-95c3-141628ea7c40",
       ],
       data: {
         files: [
@@ -556,86 +517,30 @@ export default {
       alias: "error",
       account: {},
       currency: "bitcoin",
+      followed: [
+        "c1defe0e-8803-46c9-ba9d-e9652544c882",
+        "4d8012e3-c4ed-441d-85cf-a16e8fbc62ee",
+        "3be929d6-c801-499d-abf5-93d498c49bc6",
+        "c16a3c86-92e5-411f-9688-0d5f47a2d9e8",
+        "85888e18-cbd5-457c-b4e6-13d70ce0a5c3",
+      ],
       followers: [
-        {
-          id: "8832d059-13c7-4554-92ee-d1975d8699fd",
-          alias:
-            "Ea illo officiis quos delectus. Voluptatum corrupti debitis est id ut. Exercitationem nisi eaque velit rem tempora. Vel quo sequi est omnis facere. Expedita temporibus magnam iste.\n \rA iure qui eligendi deserunt laborum. A voluptas iusto sed quia facilis natus. Dignissimos voluptas soluta rerum.\n \rRecusandae architecto numquam. Sunt pariatur fuga ratione velit adipisci. Expedita modi provident incidunt iste repellendus sit dignissimos beatae deleniti. Qui sunt cum autem vel nesciunt adipisci ab quo quis. Rerum maxime odit omnis aut alias est aut. Reprehenderit est autem atque rem.",
-        },
-        {
-          id: "bcb4a875-1ab6-4053-9c66-37d44fd0c425",
-          alias: "Tenetur velit minus alias doloremque.",
-        },
-        {
-          id: "23a35b69-91f2-4f65-9cb2-48f4e9943f58",
-          alias: "Voluptas harum qui velit beatae aut occaecati.",
-        },
-        {
-          id: "c1defe0e-8803-46c9-ba9d-e9652544c882",
-          alias: "Hic dolore reiciendis tempore rerum non molestiae.",
-        },
-        {
-          id: "4d8012e3-c4ed-441d-85cf-a16e8fbc62ee",
-          alias: "Hic eum excepturi est dolor.",
-        },
-        {
-          id: "3be929d6-c801-499d-abf5-93d498c49bc6",
-          alias: "eveniet",
-        },
-        {
-          id: "c16a3c86-92e5-411f-9688-0d5f47a2d9e8",
-          alias:
-            "Ut nihil quod et ullam sint aperiam magnam.\nVitae et molestias nihil aliquid iusto facere.\nRerum labore delectus id odio praesentium voluptatem et excepturi.\nMaiores doloribus eum aperiam libero velit alias recusandae.\nNam qui modi corrupti suscipit atque et aspernatur.",
-        },
-        {
-          id: "85888e18-cbd5-457c-b4e6-13d70ce0a5c3",
-          alias:
-            "Ut aut vero qui eum voluptatem ratione reiciendis delectus. Assumenda delectus debitis non aut. Voluptatum et fuga voluptatem. Vel consequatur laborum et quo quaerat culpa similique adipisci omnis.",
-        },
+        "8832d059-13c7-4554-92ee-d1975d8699fd",
+        "bcb4a875-1ab6-4053-9c66-37d44fd0c425",
+        "23a35b69-91f2-4f65-9cb2-48f4e9943f58",
+        "c1defe0e-8803-46c9-ba9d-e9652544c882",
+        "4d8012e3-c4ed-441d-85cf-a16e8fbc62ee",
       ],
       blackList: [
-        {
-          id: "485d79cb-8eba-49b0-95ad-8b6ee6d21e2d",
-          alias: "Culpa minus sint eos quos et illo quis excepturi.",
-        },
-        {
-          id: "68500256-2d78-4af4-ada7-484104c1a0e3",
-          alias:
-            "Et aut et ut earum et rerum. Quas quo fugiat ea et qui numquam dicta et. Qui provident optio saepe repudiandae temporibus expedita quia ipsa maiores. Est nesciunt aut. Occaecati vero incidunt non aut cum.",
-        },
-        {
-          id: "3080049b-edb5-4a2c-80b8-6dfb45fb6723",
-          alias: "necessitatibus",
-        },
-        {
-          id: "b3a211b0-d196-49a9-936d-884f472919bd",
-          alias: "exercitationem non voluptas",
-        },
-        {
-          id: "15040c9e-6ffc-4554-9d9d-d2ed90075511",
-          alias:
-            "Officia laudantium eaque rem sit voluptates quia nihil laboriosam. Veniam tempore eaque.",
-        },
-        {
-          id: "f96393b7-7943-4c38-a48a-adf9a51d3165",
-          alias:
-            "Et at voluptatem reiciendis eaque magni non voluptatem autem. Nesciunt nulla perspiciatis possimus. Nesciunt corporis sequi qui rerum sunt perferendis veritatis voluptas rerum. Quas explicabo omnis. Dolores illo necessitatibus aut.",
-        },
-        {
-          id: "def70199-b188-4de1-a1b9-0bb18669dd46",
-          alias:
-            "Eius vel vel laborum est. Vero et tempore quibusdam facere sit et molestiae officiis quisquam. Voluptatum et illum quia provident ut sint modi.\n \rAtque et ea. Ea est quod corporis facere voluptate libero. Consequuntur nulla magni qui dolorem animi voluptatem. Corrupti libero laudantium veritatis perspiciatis aut veniam culpa.\n \rDolor ipsum magnam quisquam nihil possimus atque voluptate. Rerum asperiores natus nam a quod itaque expedita quis. Asperiores quis velit amet vel repellendus corporis fugiat omnis.",
-        },
-        {
-          id: "5c40a61d-6fe8-4a4e-ad52-25445838ca21",
-          alias:
-            "Voluptatum aut tempore nostrum minima velit nihil nobis consectetur.",
-        },
-        {
-          id: "9f814cd1-e37e-4cc5-97c0-d5936f65256b",
-          alias:
-            "Nobis molestias soluta iusto illum eius quia quo rerum. Expedita qui et repellendus aliquam quia cupiditate vero beatae possimus. Optio repudiandae vel quo enim facilis eligendi quibusdam est. Non veniam ea qui quia aliquid.\n \rMolestiae explicabo nesciunt eos. Qui qui animi. Illo magni voluptatum qui explicabo deserunt. Optio numquam rerum reiciendis ducimus iste in provident ut consequatur. Laboriosam ipsum aliquid cupiditate doloribus doloribus et similique veritatis. Molestias quia ipsam dolores et ut ipsum ut consequatur.\n \rDolorum ad fuga nam aut. Corporis et consectetur eligendi incidunt natus corporis tenetur consequatur. Quia ut nesciunt minus ab sed et ea. Minus quo commodi et voluptas commodi vel perspiciatis. Nihil natus rerum adipisci quia distinctio aut rem eos.",
-        },
+        "485d79cb-8eba-49b0-95ad-8b6ee6d21e2d",
+        "68500256-2d78-4af4-ada7-484104c1a0e3",
+        "3080049b-edb5-4a2c-80b8-6dfb45fb6723",
+        "b3a211b0-d196-49a9-936d-884f472919bd",
+        "15040c9e-6ffc-4554-9d9d-d2ed90075511",
+        "f96393b7-7943-4c38-a48a-adf9a51d3165",
+        "def70199-b188-4de1-a1b9-0bb18669dd46",
+        "5c40a61d-6fe8-4a4e-ad52-25445838ca21",
+        "9f814cd1-e37e-4cc5-97c0-d5936f65256b",
       ],
       data: {
         files: [
@@ -681,79 +586,126 @@ export default {
         "Ut accusantium est sit eius sit voluptatum sint. Eos nihil molestiae sit nostrum laboriosam voluptate. Vitae ex autem facilis distinctio labore nulla autem libero.",
       account: {},
       currency: "bitcoin",
+      followed: [
+        "1297510b-742a-45ad-9fe1-b7944f7731f0",
+        "39025fb5-fadd-4ecc-bde2-a7f68128d2ba",
+        "1657a511-8128-4a49-9bfb-c4e4d8f2a8d5",
+        "59fe132c-433e-4699-9e0d-f769b6cc0b73",
+        "a6059de5-0229-436e-8f40-520ffc69cd13",
+        "97669bc6-609e-48d0-aacc-91356d71572c",
+      ],
       followers: [
-        {
-          id: "1297510b-742a-45ad-9fe1-b7944f7731f0",
-          alias: "Non in illum ab.",
-        },
-        {
-          id: "39025fb5-fadd-4ecc-bde2-a7f68128d2ba",
-          alias:
-            "Doloribus perferendis inventore quos placeat. Nisi molestiae odit fugit. Architecto officiis excepturi. Dolores dignissimos consequatur reprehenderit sed ex provident ut quasi ut. Ea autem dignissimos eius consequuntur quia. Iste mollitia corporis.",
-        },
-        {
-          id: "1657a511-8128-4a49-9bfb-c4e4d8f2a8d5",
-          alias: "Dolorem modi qui.",
-        },
-        {
-          id: "d43725f1-6630-487a-987f-474a7a4de60d",
-          alias: "Non deleniti aut qui sequi saepe blanditiis.",
-        },
-        {
-          id: "709f0213-22e9-402a-9a10-520975300e60",
-          alias:
-            "Repudiandae harum nesciunt. Quis numquam nemo eos. Fuga numquam rerum et. Neque voluptatem ullam architecto. Similique sint dolores saepe necessitatibus sit aut architecto ut. Reiciendis doloribus eveniet culpa quod et quidem non in ipsam.",
-        },
-        {
-          id: "91f54e60-3030-4406-9fcb-39a5fc35fe47",
-          alias: "Possimus suscipit molestias sunt nobis qui beatae.",
-        },
-        {
-          id: "59fe132c-433e-4699-9e0d-f769b6cc0b73",
-          alias:
-            "Blanditiis ea magnam. Cupiditate tempore facere voluptas repellat iusto nostrum non dolore repudiandae. Accusantium perspiciatis dolor et autem delectus qui autem assumenda. Possimus illo natus tempora laboriosam aliquam. Autem sapiente hic. Aut aliquam esse.",
-        },
-        {
-          id: "a6059de5-0229-436e-8f40-520ffc69cd13",
-          alias: "exercitationem",
-        },
-        {
-          id: "97669bc6-609e-48d0-aacc-91356d71572c",
-          alias: "reprehenderit",
-        },
+        "39025fb5-fadd-4ecc-bde2-a7f68128d2ba",
+        "1657a511-8128-4a49-9bfb-c4e4d8f2a8d5",
+        "d43725f1-6630-487a-987f-474a7a4de60d",
+        "709f0213-22e9-402a-9a10-520975300e60",
+        "91f54e60-3030-4406-9fcb-39a5fc35fe47",
+        "59fe132c-433e-4699-9e0d-f769b6cc0b73",
+        "a6059de5-0229-436e-8f40-520ffc69cd13",
       ],
       blackList: [
-        {
-          id: "f8087de4-a0b2-4298-a312-329572edd94b",
-          alias: "Rem quidem itaque suscipit aut officiis adipisci quos.",
-        },
-        {
-          id: "f3b977f6-833a-47da-aa2e-a02d293f92f0",
-          alias: "Mollitia sunt ut eius consequuntur facere.",
-        },
-        {
-          id: "8fe7cad6-100b-46e1-b9ae-f2ba85dba7bd",
-          alias:
-            "Non rerum cupiditate qui autem aliquam facilis non pariatur consequatur.\nId aut quas sit totam deleniti consequuntur illum.",
-        },
-        {
-          id: "a2d821a3-2f83-413d-ba89-3b27c927884d",
-          alias:
-            "Cumque cumque sunt accusantium enim qui cum. Inventore maiores molestias qui enim. Rerum quam id reprehenderit sapiente inventore consequuntur non vel quia. Aliquam sit et. Ullam esse dolore molestias harum fuga vel ut ea. Fugit autem quod.",
-        },
-        {
-          id: "98ecbb83-21b4-4893-9690-e82e08739a90",
-          alias: "Autem nulla corrupti enim id dolores.",
-        },
-        {
-          id: "f36456f8-14eb-4704-b105-e26313bec499",
-          alias:
-            "Nobis aliquid perferendis reiciendis iure beatae laudantium deleniti temporibus.",
-        },
+        "f8087de4-a0b2-4298-a312-329572edd94b",
+        "f3b977f6-833a-47da-aa2e-a02d293f92f0",
+        "8fe7cad6-100b-46e1-b9ae-f2ba85dba7bd",
+        "a2d821a3-2f83-413d-ba89-3b27c927884d",
+        "98ecbb83-21b4-4893-9690-e82e08739a90",
+        "f36456f8-14eb-4704-b105-e26313bec499",
       ],
       data: {},
       meta: {
         creationDate: "corporis",
+      },
+    },
+  ],
+  Rooms: [
+    {
+      id: "R001",
+      name: "ledger-gun",
+      private: true,
+    },
+    {
+      id: "R002",
+      name: "ledger-live",
+      private: false,
+    },
+    {
+      id: "R003",
+      name: "live-faucet",
+      private: true,
+    },
+    {
+      id: "R004",
+      name: "live-dev",
+      private: false,
+    },
+    {
+      id: "R005",
+      name: "cats",
+      private: true,
+    },
+    {
+      id: "R006",
+      name: "bardak",
+      private: false,
+    },
+    {
+      id: "R007",
+      name: "general",
+      private: false,
+    },
+    {
+      id: "R008",
+      name: "internal-announcements",
+      private: true,
+    },
+  ],
+  Messages: [
+    {
+      id: "c867809f-b090-4c60-b674-1f62b6812560",
+      from: "b25a2922",
+      message:
+        "Sit aut minima nihil.\n onsectetur mollitia volup aperiam praesentium.\n es quia a dolusto qui inventore consequatur libero quia sint est.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:10:55.830Z"),
+      },
+    },
+    {
+      id: "c867809f-b090-4c60-b674-qssqsqdsq",
+      from: "b25a2922",
+      message:
+        "Non rerum cupiditate qui autem aliquam facilis non pariatur consequatur.\nId aut quas sit totam deleniti consequuntur illum.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:10:56.830Z"),
+      },
+    },
+    {
+      id: "c867809f-b090-4c60-b674-42424242",
+      from: "b25a2922",
+      message: "Sit aut minima nih",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:11:00.830Z"),
+      },
+    },
+    {
+      id: "qsdsqddsq",
+      from: "sdqdsqqd",
+      message:
+        "Voluptatum aut tempore nostrum minima velit nihil nobis consectetur.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:12:55.830Z"),
+      },
+    },
+    {
+      id: "azzeffftg",
+      from: "sdqdsqqd",
+      message: "Non deleniti aut qui sequi saepe blanditiis.",
+      data: {},
+      meta: {
+        creationDate: new Date("2021-12-14T17:13:56.830Z"),
       },
     },
   ],
