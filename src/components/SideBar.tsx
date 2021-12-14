@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { map, reduce, sortBy } from "lodash";
+
 import Button from "./Button";
 import Box from "./Box";
 import { Room, User } from "../types";
@@ -15,7 +16,7 @@ const SideBarBody = styled(Box).attrs({ withPadding: true, withBorder: true })`
   color: ${(props) => props.theme.colors.primary.c100};
   font-family: monospace;
   line-height: 1.5rem;
-  width: 240px;
+  width: 100%;
   border: 2px solid ${(props) => props.theme.colors.primary.c100};
   padding: ${(props) => props.theme.space[7]}px;
   font-size: 1.1rem;

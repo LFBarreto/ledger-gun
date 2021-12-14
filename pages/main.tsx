@@ -1,7 +1,11 @@
 import React from "react";
-import Layout from "../src/components/Layout";
+import dynamic from "next/dynamic";
 
 import mock from "../src/types/mock";
+
+const Layout = dynamic(() => import("../src/components/Layout"), {
+  ssr: false,
+});
 
 export default function Main(): React.ReactElement {
   const user = mock.Users[0];
