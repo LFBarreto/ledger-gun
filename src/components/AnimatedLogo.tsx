@@ -7,6 +7,7 @@ const Root = styled(Flex).attrs({
   flexDirection: "column",
   justifyContent: "flex-end",
   alignItems: "flex-end",
+  height: "100%",
 })`
   > * {
     text-align: right;
