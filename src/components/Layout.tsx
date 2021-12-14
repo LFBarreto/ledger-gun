@@ -13,7 +13,15 @@ const Container = styled.main`
   min-width: 360px;
 `;
 
+const Content = styled.div`
+  padding: ${(props) => props.theme.space[3]}px;
+  border: 2px solid ${(props) => props.theme.colors.primary.c100};
+  background: ${(props) => props.theme.colors.background.main};
+  height: 100%;
+`;
+
 const SideBarAffixButton = styled(Button)`
+  z-index: 100;
   position: absolute;
   top: calc(${(props) => props.theme.space[3] + props.theme.space[7]}px + 2px);
   left: calc(${(props) => props.theme.space[3] + props.theme.space[7]}px + 2px);
@@ -21,6 +29,10 @@ const SideBarAffixButton = styled(Button)`
 
 const SplitPaneLayout = styled(SplitPane)`
   position: relative !important;
+
+  .Pane1 {
+    margin-right: ${(props) => props.theme.space[3]}px;
+  }
 
   .Resizer {
     background: ${(props) => props.theme.colors.background.main};
@@ -92,7 +104,7 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
         <SideBarAffixButton onClick={() => setSidebarOpen(true)}>
           {">>"}
         </SideBarAffixButton>
-        {children}
+        <Content>{children}</Content>
       </Container>
     );
   }
@@ -127,7 +139,7 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
           onSelect={() => null}
           onCreate={() => null}
         />
-        {children}
+        <Content>{children}</Content>
       </SplitPaneLayout>
     </Container>
   );
