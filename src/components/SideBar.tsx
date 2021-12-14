@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { map, reduce, sortBy } from "lodash";
 import styled from "styled-components";
 
@@ -8,7 +8,7 @@ type RoomTree<Keys extends string> = {
   [K in Keys]: Room[];
 };
 
-const Button = styled.button`
+export const Button = styled.button`
   font-family: monospace;
   font-size: 1.1rem;
   line-height: 1.5rem;
@@ -25,13 +25,9 @@ const Button = styled.button`
 
   :active {
     font-weight: bold;
+    background: ${(props) => props.theme.colors.primary.c100};
+    color: ${(props) => props.theme.colors.background.main};
   }
-`;
-
-const SideBarAffixButton = styled(Button)`
-  position: absolute;
-  top: calc(${(props) => props.theme.space[3] + props.theme.space[7]}px + 2px);
-  left: calc(${(props) => props.theme.space[3] + props.theme.space[7]}px + 2px);
 `;
 
 const SideBarBody = styled.div`
@@ -40,11 +36,11 @@ const SideBarBody = styled.div`
   color: ${(props) => props.theme.colors.primary.c100};
   font-family: monospace;
   line-height: 1.5rem;
-  width: 240px;
   border: 2px solid ${(props) => props.theme.colors.primary.c100};
   padding: ${(props) => props.theme.space[7]}px;
   font-size: 1.1rem;
   height: 100%;
+  width: 100%;
 `;
 
 const Categories = styled.div`
@@ -72,6 +68,8 @@ const RoomListItem = styled.li`
 
   :active {
     font-weight: bold;
+    background: ${(props) => props.theme.colors.primary.c100};
+    color: ${(props) => props.theme.colors.background.main};
   }
 
   a {
@@ -92,6 +90,7 @@ const Footer = styled.div`
 export type SideBarProps = {
   user: User;
   rooms: Room[];
+  onClose: () => void;
   onSelect: (_: Room) => void;
   onCreate: () => void;
 };
@@ -99,19 +98,10 @@ export type SideBarProps = {
 const SideBar = ({
   user,
   rooms,
+  onClose,
   onSelect,
   onCreate,
 }: SideBarProps): JSX.Element => {
-  const [isOpen, setOpen] = useState(true);
-
-  if (!isOpen) {
-    return (
-      <SideBarAffixButton onClick={() => setOpen(true)}>
-        {">>"}
-      </SideBarAffixButton>
-    );
-  }
-
   const sortedRooms = sortBy(rooms, (room) => room.name);
 
   const emptyRoomTree: RoomTree<"public" | "private"> = {
@@ -139,7 +129,7 @@ const SideBar = ({
   return (
     <SideBarBody>
       <div style={{ display: "flex" }}>
-        <Button onClick={() => setOpen(false)}>{"<<"}</Button>
+        <Button onClick={onClose}>{"<<"}</Button>
         <AddRoomButton onClick={onCreate}>New Room</AddRoomButton>
       </div>
       <Categories>
