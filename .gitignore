@@ -39,3 +39,7 @@ yarn-error.log*
 
 # webstorm
 .idea/
+
+./tsconfig.tsbuildinfo
+
+./radata
