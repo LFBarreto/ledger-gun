@@ -31,8 +31,17 @@ export default function ChatWindow({
   const ref = useRef<HTMLElement>();
   const handlePushMessage = useCallback(
     (mess) => {
-      // @ts-expect-error error
-      setM((m) => m.concat([{ message: mess, userID, id: "" + Date.now() }]));
+      setM((m) =>
+        m.concat([
+          {
+            message: mess,
+            from: userID,
+            id: "" + Date.now(),
+            meta: { creationDate: new Date() },
+            data: {},
+          },
+        ])
+      );
       onSubmitMessage && onSubmitMessage(mess);
     },
     [userID]
@@ -54,6 +63,7 @@ export default function ChatWindow({
     return () => clearTimeout(t);
   }, [messages, ref]);
 
+  console.log(messages);
   return (
     <Flex
       flex="1"
@@ -68,7 +78,8 @@ export default function ChatWindow({
           <MessageComponent
             key={message?.id + i}
             message={message}
-            userID={userID}
+            showUsername={i === 0 || m[i - 1].from !== message.from}
+            isReverse={userID === message.from}
           />
         ))}
       </ChatContainer>

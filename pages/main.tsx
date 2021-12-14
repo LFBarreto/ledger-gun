@@ -15,7 +15,7 @@ export default function Main({
   user: User;
 }): React.ReactElement {
   const rooms = mock.Rooms;
-  const messages = mock.Channels[1].messages;
+  const messages = mock.Messages;
 
   return (
     <Layout user={user as any} rooms={rooms}>
