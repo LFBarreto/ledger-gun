@@ -1,6 +1,6 @@
 import React from "react";
+import Layout from "../src/components/Layout";
 
-import SideBar from "../src/components/SideBar";
 import mock from "../src/types/mock";
 
 export default function Main(): React.ReactElement {
@@ -8,13 +8,8 @@ export default function Main(): React.ReactElement {
   const rooms = mock.Rooms;
 
   return (
-    <div>
-      <SideBar
-        user={user as any}
-        rooms={rooms}
-        onSelect={() => null}
-        onCreate={() => null}
-      />
-    </div>
+    <Layout user={user as any} rooms={rooms}>
+      <div />
+    </Layout>
   );
 }
