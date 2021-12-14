@@ -1,6 +1,7 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import SplitPane from "react-split-pane";
 import styled from "styled-components";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 import { Room, User } from "../types";
 import SideBar, { Button } from "./SideBar";
@@ -59,7 +60,14 @@ export type LayoutProps = {
 };
 
 const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isSidebarOpen, setSidebarOpen] = useLocalStorage(
+    "layout-sidebar-open",
+    true
+  );
+  const [sidebarWidth, setSidebarWidth] = useLocalStorage(
+    "layout-sidebar-width",
+    280
+  );
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1920
   );
@@ -104,7 +112,13 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
 
   return (
     <Container>
-      <SplitPaneLayout split="vertical" minSize={240} defaultSize={280}>
+      <SplitPaneLayout
+        split="vertical"
+        minSize={240}
+        maxSize={640}
+        defaultSize={sidebarWidth}
+        onChange={setSidebarWidth}
+      >
         <SideBar
           user={user as any}
           rooms={rooms}
