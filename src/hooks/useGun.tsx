@@ -10,7 +10,7 @@ import React, {
   createContext,
 } from "react";
 import { useRouter } from "next/router";
-// import "../libs/webrtc";
+import "../libs/webrtc";
 
 const MyContext = createContext<any>({
   profile: null,
@@ -52,6 +52,52 @@ const gun = Gun([
 ]);
 const user = gun.user().recall({ sessionStorage: true });
 
+/* Webrtc Debugging Stuff */
+/* eslint-disable no-console */
+gun.on(
+  "hi",
+  function (peer: RTCPeerConnection & { url: string; wire: unknown }) {
+    console.log("hi!", peer);
+    if (peer.url) {
+      return;
+    }
+    // @ts-expect-error Bad bindings…
+    Gun.obj.map(
+      gun.back("opt.peers"),
+      function (
+        peer: RTCPeerConnection & {
+          url: string;
+          wire: { send: (_: string) => void; _send: (_: string) => void };
+        }
+      ) {
+        if (!peer.url || !peer.wire) {
+          return;
+        }
+        peer.wire._send = peer.wire.send;
+        peer.wire.send = send;
+        const tmp =
+          "GOBBLE GOBBLE: Not sending any non-WebRTC messages to " + peer.url;
+        console.log(tmp);
+      }
+    );
+  }
+);
+function send(raw: string) {
+  if (!raw) {
+    return;
+  }
+  if (raw.indexOf("rtc") >= 0) {
+    // @ts-expect-error …………
+    if (!this._send) {
+      return;
+    }
+    // @ts-expect-error …………
+    return this._send(raw);
+  }
+}
+/* eslint-enable no-console */
+/* ---------------------- */
+
 const useGun = (): {
   createUser: (username: string, password: string) => Promise<unknown>;
   login: (username: string, password: string, account: any) => Promise<unknown>;
@@ -89,52 +135,6 @@ const useGun = (): {
       // @ts-expect-error error
       user.then(setProfile);
     }
-    /* Webrtc Debugging Stuff */
-    /* eslint-disable no-console */
-    // gun.on(
-    //   "hi",
-    //   function (peer: RTCPeerConnection & { url: string; wire: unknown }) {
-    //     console.log("hi!", peer);
-    //     if (peer.url) {
-    //       return;
-    //     }
-    //     // @ts-expect-error Bad bindings…
-    //     Gun.obj.map(
-    //       gun.back("opt.peers"),
-    //       function (
-    //         peer: RTCPeerConnection & {
-    //           url: string;
-    //           wire: { send: (_: string) => void; _send: (_: string) => void };
-    //         }
-    //       ) {
-    //         if (!peer.url || !peer.wire) {
-    //           return;
-    //         }
-    //         peer.wire._send = peer.wire.send;
-    //         peer.wire.send = send;
-    //         const tmp =
-    //           "GOBBLE GOBBLE: Not sending any non-WebRTC messages to " +
-    //           peer.url;
-    //         console.log(tmp);
-    //       }
-    //     );
-    //   }
-    // );
-    // function send(raw: string) {
-    //   if (!raw) {
-    //     return;
-    //   }
-    //   if (raw.indexOf("rtc") >= 0) {
-    //     // @ts-expect-error …………
-    //     if (!this._send) {
-    //       return;
-    //     }
-    //     // @ts-expect-error …………
-    //     return this._send(raw);
-    //   }
-    // }
-    /* eslint-enable no-console */
-    /* ---------------------- */
   }, []);
 
   const useUpdateChannels = () => {
@@ -245,14 +245,12 @@ const useGun = (): {
           .get("channels")
           .get(chan)
           .get("messages")
-          .put({
-            [id]: {
-              id,
-              from: alias,
-              message,
-              data: {},
-              meta: { creationDate: id },
-            },
+          .set({
+            id,
+            from: alias,
+            message,
+            data: {},
+            meta: { creationDate: id },
           });
       }
     },
