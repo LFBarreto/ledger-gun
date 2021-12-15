@@ -10,7 +10,7 @@ import Text from "./Text";
 import UserList from "./UserList";
 
 type Props = {
-  user: User;
+  user?: User;
   onAliasChange: (alias: string) => void;
   onFollowedChange: (followers: UserID[]) => void;
   onBlackListChange: (blackList: UserID[]) => void;
@@ -51,7 +51,7 @@ const UserProfileManager = ({
   onFollowedChange,
   onBlackListChange,
 }: Props): React.ReactElement => {
-  const { id, alias, account, currency } = user || {};
+  const { id = "", alias = "", account, currency } = user || {};
   const followed: string[] = [];
   const followers: string[] = [];
   const blackList: string[] = [];
