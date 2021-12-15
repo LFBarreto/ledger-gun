@@ -66,7 +66,16 @@ const AddRoomButton = styled(Button)`
 
 const Footer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+`;
+
+const Username = styled.span`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 1rem;
+  text-align: center;
 `;
 
 export type SideBarProps = {
@@ -134,7 +143,8 @@ const SideBar = ({
         ))}
       </Categories>
       <Footer>
-        <span>{user?.alias}</span> - <span onClick={logout}>logout</span>
+        <Username>{user?.alias}</Username>
+        <Button onClick={logout}>Logout</Button>
       </Footer>
     </SideBarBody>
   );

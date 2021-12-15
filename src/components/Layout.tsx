@@ -19,6 +19,7 @@ const Content = styled.div`
   padding: ${(props) => props.theme.space[3]}px;
   background: ${(props) => props.theme.colors.background.main};
   height: 100%;
+  overflow: auto;
 `;
 
 const SideBarAffixButton = styled(Button)`
