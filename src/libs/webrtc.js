@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Gun from "gun";
 
 Gun.on("opt", function (root) {
