@@ -126,7 +126,7 @@ const UserProfileManager = ({
       <KeyValueText k="address" value={account?.address} />
       <Flex alignSelf="center">
         {/* TODO: figure out exactly what to put in QR Code: dumb plain address or smart URI ? */}
-        <QRCode data={id || "0"} />
+        <QRCode data={id || alias} />
       </Flex>
       <UserList
         hasButton
