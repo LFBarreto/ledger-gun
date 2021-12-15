@@ -45,7 +45,8 @@ const SideBarBody = styled(Box).attrs({ withPadding: true })`
 const Footer = styled(Box).attrs({ withPadding: true })`
   border-top: 2px solid ${(props) => props.theme.colors.primary.c100};
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Categories = styled.div`
@@ -222,7 +223,16 @@ const SideBar = ({
         )}
       </SideBarBody>
       <Footer>
-        <BaseButton onClick={toggleShowUserProfile}>[{user?.alias}]</BaseButton>
+        <BaseButton
+          style={{
+            overflow: "hidden",
+            maxWidth: "100%",
+            textOverflow: "ellipsis",
+          }}
+          onClick={toggleShowUserProfile}
+        >
+          [{user?.alias}]
+        </BaseButton>
         <BaseButton onClick={logout}>[logout]</BaseButton>
       </Footer>
     </Container>
