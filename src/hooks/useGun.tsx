@@ -55,6 +55,7 @@ const user = gun.user().recall({ sessionStorage: true });
 /* Webrtc Debugging Stuff */
 /* eslint-disable no-console */
 gun.on(
+  // @ts-expect-error Bad bindings…
   "hi",
   function (peer: RTCPeerConnection & { url: string; wire: unknown }) {
     console.log("hi!", peer);
@@ -63,6 +64,7 @@ gun.on(
     }
     // @ts-expect-error Bad bindings…
     Gun.obj.map(
+      // @ts-expect-error Bad bindings…
       gun.back("opt.peers"),
       function (
         peer: RTCPeerConnection & {
