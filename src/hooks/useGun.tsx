@@ -66,6 +66,7 @@ const useGun = (): {
   messages: any[];
   sendMessage: (message: string) => void;
   updateMessages: () => void;
+  updateChannels: () => void;
 } => {
   const {
     profile,
@@ -79,6 +80,16 @@ const useGun = (): {
   } = useContext(MyContext);
 
   const router = useRouter();
+
+  const updateChannels = useCallback(() => {
+    gun.get("channels").on((ids: string) => {
+      setChannels(
+        Object.entries(ids)
+          .filter(([_, value]) => value !== null)
+          .map(([key]) => key)
+      );
+    });
+  }, [setChannels]);
 
   useEffect(() => {
     // @ts-expect-error error
@@ -133,13 +144,7 @@ const useGun = (): {
     /* eslint-enable no-console */
     /* ---------------------- */
 
-    gun.get("channels").on((ids: string) => {
-      setChannels(
-        Object.entries(ids)
-          .filter(([_, value]) => value !== null)
-          .map(([key]) => key)
-      );
-    });
+    updateChannels();
 
     return () => gun.off();
   }, []);
@@ -268,6 +273,7 @@ const useGun = (): {
 
   const createChannel = useCallback((id: string) => {
     gun.get("channels").get(id).put({ id, messages: {} });
+    updateChannels();
   }, []);
 
   const removeChannel = (id: string) => {
@@ -292,6 +298,7 @@ const useGun = (): {
     messages: chan ? messages?.[chan] ?? [] : [],
     updateMessages,
     sendMessage,
+    updateChannels,
   };
 };
 
