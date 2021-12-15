@@ -95,7 +95,8 @@ Gun.on("opt", function (root) {
       return peer.setRemoteDescription(
         (peer.remoteSet = new opt.RTCSessionDescription({
           ...tmp,
-          sdp: JSON.parse(`"${tmp.sdp}"`),
+          sdp:
+            tmp.sdp.indexOf("\\r") > 0 ? JSON.parse(`"${tmp.sdp}"`) : tmp.sdp,
         }))
       );
     }
@@ -151,7 +152,7 @@ Gun.on("opt", function (root) {
     if ((tmp = rtc.offer)) {
       peer.setRemoteDescription({
         ...tmp,
-        sdp: JSON.parse(`"${tmp.sdp}"`),
+        sdp: tmp.sdp.indexOf("\\r") > 0 ? JSON.parse(`"${tmp.sdp}"`) : tmp.sdp,
       });
       peer.createAnswer(
         function (answer) {
