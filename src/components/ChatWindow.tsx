@@ -51,7 +51,6 @@ export default function ChatWindow({
     return () => clearTimeout(t);
   }, [messages, ref]);
 
-  console.log(messages);
   return (
     <Flex
       flex="1"

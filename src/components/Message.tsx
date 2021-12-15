@@ -40,7 +40,6 @@ const MessageBox = ({
   isReverse: boolean;
   showUsername: boolean;
 }): JSX.Element => {
-  console.log({ message });
   return (
     <Flex mb={4} flexDirection={isReverse ? "row-reverse" : "row"}>
       <Flex ml={2} flexDirection={"column"}>
