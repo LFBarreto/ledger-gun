@@ -83,16 +83,6 @@ const useGun = (): {
 
   const router = useRouter();
 
-  const updateChannels = useCallback(() => {
-    gun.get("channels").on((ids: string) => {
-      setChannels(
-        Object.entries(ids)
-          .filter(([_, value]) => value !== null)
-          .map(([key]) => key)
-      );
-    });
-  }, [setChannels]);
-
   useEffect(() => {
     // @ts-expect-error error
     if (user.is) {
@@ -150,9 +140,11 @@ const useGun = (): {
   const useUpdateChannels = () => {
     useEffect(() => {
       let ev = null;
-      gun.get("channels").on((ids: string, key, _msg, _ev) => {
+      gun.get("channels").on((ids, key, _msg, _ev) => {
         ev = _ev;
-        setChannels(Object.keys(ids).filter((id) => id !== "_"));
+        setChannels(
+          Object.keys(ids).filter((id) => id !== "_" && ids[id] !== null)
+        );
       });
 
       return () => ev && ev.off();
@@ -177,7 +169,7 @@ const useGun = (): {
                   [channel]: [...(messages[channel] || []), msg].filter(
                     (data: any, i: number, arr: any[]) =>
                       arr.findIndex(
-                        (d: any) => d.data["#"] === data.data["#"]
+                        (d: any) => d?.data["#"] === data?.data["#"]
                       ) === i
                   ),
                 }
