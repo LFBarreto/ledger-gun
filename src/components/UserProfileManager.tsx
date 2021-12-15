@@ -10,7 +10,7 @@ import Text from "./Text";
 import UserList from "./UserList";
 
 type Props = {
-  user: User;
+  user?: User;
   onAliasChange: (alias: string) => void;
   onFollowedChange: (followers: UserID[]) => void;
   onBlackListChange: (blackList: UserID[]) => void;
@@ -46,12 +46,12 @@ function removeId(userIds: UserID[], userId: UserID) {
 const ENTER_KEY_CODE = 13;
 
 const UserProfileManager = ({
-  user = {},
+  user,
   onAliasChange,
   onFollowedChange,
   onBlackListChange,
 }: Props): React.ReactElement => {
-  const { id, alias, account, currency } = user || {};
+  const { id = "", alias = "", account, currency } = user || {};
   const followed: string[] = [];
   const followers: string[] = [];
   const blackList: string[] = [];
