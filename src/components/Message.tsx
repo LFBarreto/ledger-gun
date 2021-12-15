@@ -14,7 +14,9 @@ const TextBody = styled.div<{ isReverse: boolean }>`
   border-${(props) => (props.isReverse ? "right" : "left")}: 2px solid ${(
   props
 ) => props.theme.colors.primary.c100};
-  padding: ${(props) => props.theme.space[4]}px;
+  padding-left: ${(props) => props.theme.space[4]}px;
+  padding-right: ${(props) => props.theme.space[4]}px;
+
   margin-bottom: 2px;
   white-space: pre-line;
 `;
@@ -52,14 +54,16 @@ const MessageBox = ({
           </UsernameText>
         )}
         <TextBody isReverse={isReverse}>
-          <Linkify options={linkifyOptions}>{message.message}</Linkify>
+          <Flex flexDirection={isReverse ? "row-reverse" : "row"}>
+            <Linkify options={linkifyOptions}>{message.message}</Linkify>
+          </Flex>
+          <DateText
+            color={"primary.c100"}
+            flexDirection={isReverse ? "row-reverse" : "row"}
+          >
+            {message.id}
+          </DateText>
         </TextBody>
-        <DateText
-          color={"primary.c100"}
-          flexDirection={isReverse ? "row-reverse" : "row"}
-        >
-          {message?.meta?.creationDate}
-        </DateText>
       </Flex>
     </Flex>
   );
