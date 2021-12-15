@@ -21,8 +21,16 @@ const Layout = dynamic(() => import("../src/components/Layout"), {
 
 export default function Main(): React.ReactElement {
   const router = useRouter();
-  const { isLogged, profile, channel, messages, sendMessage, updateMessages } =
-    useGun();
+  const {
+    isLogged,
+    profile,
+    user,
+    channel,
+    channels,
+    messages,
+    sendMessage,
+    updateMessages,
+  } = useGun();
 
   const api = useApi();
 
@@ -37,7 +45,6 @@ export default function Main(): React.ReactElement {
           userID={profile?.alias}
           messages={messages}
           onSubmitCommand={(command) => {
-            console.log("command submitted", command);
             switch (command) {
               case "/send":
                 sendMessage(
@@ -45,13 +52,15 @@ export default function Main(): React.ReactElement {
                 );
                 break;
               case "/request":
-                if (profile) {
-                  api?.receive(profile.alias).then((accoundAddress: string) => {
-                    sendMessage(
-                      "Hello, you can send me your sweet sweet money in the following address: " +
-                        accoundAddress
-                    );
-                  });
+                if (user) {
+                  api
+                    ?.receive(user.is?.alias)
+                    .then((accoundAddress: string) => {
+                      sendMessage(
+                        "Hello, you can send me your sweet sweet money in the following address: " +
+                          accoundAddress
+                      );
+                    });
                 } else {
                   console.error(new Error("No accountId selected"));
                 }
