@@ -18,7 +18,7 @@ export default function Main(): React.ReactElement {
   }, []);
 
   return (
-    <Layout user={profile} rooms={channels}>
+    <Layout user={profile} rooms={channels} currentChannel={channel}>
       {channel ? (
         <ChatWindow
           userID={profile?.alias}

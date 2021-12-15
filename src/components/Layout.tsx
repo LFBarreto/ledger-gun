@@ -72,9 +72,15 @@ export type LayoutProps = {
   children?: ReactNode;
   user: any;
   rooms: string[];
+  currentChannel: string;
 };
 
-const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
+const Layout = ({
+  children,
+  user,
+  rooms,
+  currentChannel,
+}: LayoutProps): JSX.Element => {
   const { channels, createChannel, setChannel } = useGun();
 
   const [isSidebarOpen, setSidebarOpen] = useLocalStorage(
@@ -139,6 +145,7 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
         <SideBar
           user={user}
           rooms={channels}
+          currentChannel={currentChannel}
           onClose={() => setSidebarOpen(false)}
           onSelect={setChannel}
           onCreate={(id) => createChannel(id)}

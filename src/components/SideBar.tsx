@@ -38,11 +38,18 @@ const RoomList = styled.ul`
   list-style-type: none;
 `;
 
-const RoomListItem = styled.li`
+const RoomListItem = styled.li<{ selected: boolean }>`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   padding-left: ${(props) => props.theme.space[7]}px;
+
+  ${(props) =>
+    props.selected &&
+    `
+    background: ${props.theme.colors.primary.c100};
+    color: ${props.theme.colors.background.main};
+  `}
 
   :hover {
     background: ${(props) => props.theme.colors.primary.c100};
@@ -82,6 +89,7 @@ const Username = styled.span`
 export type SideBarProps = {
   user: User;
   rooms: string[];
+  currentChannel: string;
   onClose: () => void;
   onSelect: (_: string) => void;
   onCreate: (_: string) => void;
@@ -90,6 +98,7 @@ export type SideBarProps = {
 const SideBar = ({
   user,
   rooms,
+  currentChannel,
   onClose,
   onSelect,
   onCreate,
@@ -153,7 +162,7 @@ const SideBar = ({
             <strong>{`> ${category}`}</strong>
             <RoomList>
               {rooms.map((room) => (
-                <RoomListItem key={room}>
+                <RoomListItem key={room} selected={room === currentChannel}>
                   <div onClick={() => onSelect(room)}>{room}</div>
                 </RoomListItem>
               ))}
