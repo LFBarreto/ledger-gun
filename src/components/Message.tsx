@@ -60,7 +60,7 @@ const MessageBox = ({
             color={"primary.c100"}
             flexDirection={isReverse ? "row-reverse" : "row"}
           >
-            {message.id}
+            {new Date(message.id).toLocaleTimeString()}
           </DateText>
         </TextBody>
       </Flex>
