@@ -47,7 +47,13 @@ const DebugApp = (): React.ReactElement => {
       });
 
       if (res) {
-        login(account.id, res);
+        // @ts-expect-error error
+        login(account.id, res, {
+          ...account,
+          balance: account.balance?.toString(),
+          spendableBalance: account.spendableBalance?.toString(),
+          lastSyncDate: account.lastSyncDate.toISOString(),
+        });
       }
 
       // FIXME: this will be the "password", and `account.address` will be the login

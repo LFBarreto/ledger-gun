@@ -52,7 +52,7 @@ const user = gun.user().recall({ sessionStorage: true });
 
 const useGun = (): {
   createUser: (username: string, password: string) => Promise<unknown>;
-  login: (username: string, password: string) => Promise<unknown>;
+  login: (username: string, password: string, account: any) => Promise<unknown>;
   logout: () => void;
   gun: any;
   user: any;
@@ -221,19 +221,25 @@ const useGun = (): {
   }, []);
 
   const createUser = useCallback(
-    (username, password) => {
+    (username, password, account = {}) => {
       return new Promise((resolve, reject) => {
         if (!gun) reject(false);
         user
           .create(username, password, ({ err }: any) => {
-            if (err) {
-              return login(username, password).then(resolve, reject);
-            } else {
-              reject(false);
-            }
+            return login(username, password).then(resolve, reject);
           })
           .on((ack: any) => {
-            const infos = { createdAt: Date.now() };
+            const infos = {
+              alias: username,
+              createdAt: Date.now(),
+              account,
+              currency: account.currency,
+              followed: null,
+              followers: {},
+              blackList: {},
+              data: {},
+              meta: {},
+            };
             user.set(infos);
             // const pair = SEA.pair((keys) => console.log("SEA keys", keys));
             resolve(ack);
