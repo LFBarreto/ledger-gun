@@ -94,9 +94,9 @@ const ledgerLogo =
   );
 
 const Container = styled.div.attrs({ color: "primary.c100" })`
-  font-size: 5px;
+  font-size: 10px;
   font-family: monospace;
-  line-height: 5px;
+  line-height: 10px;
   width: 100%;
   text-align: right;
   height: auto;

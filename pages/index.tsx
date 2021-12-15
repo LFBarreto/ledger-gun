@@ -82,7 +82,7 @@ const DebugApp = (): React.ReactElement => {
                     handleSignMessage(acc);
                   }}
                 >
-                  {acc.name} ~:[{index}]
+                  [{index}]~: {acc.name}
                 </Text>
               );
             })

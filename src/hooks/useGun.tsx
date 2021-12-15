@@ -139,14 +139,16 @@ const useGun = (): {
 
   const useUpdateChannels = () => {
     useEffect(() => {
+      // @ts-expect-error error
       let ev = null;
+      // @ts-expect-error error
       gun.get("channels").on((ids, key, _msg, _ev) => {
         ev = _ev;
         setChannels(
           Object.keys(ids).filter((id) => id !== "_" && ids[id] !== null)
         );
       });
-
+      // @ts-expect-error error
       return () => ev && ev.off();
     }, []);
   };
@@ -154,19 +156,21 @@ const useGun = (): {
   const useUpdateMessages = (channel: string) => {
     useEffect(() => {
       if (!channel) return;
+      // @ts-expect-error error
       let ev = null;
       gun
         .get("channels")
         .get(channel)
         .get("messages")
         .map()
+        // @ts-expect-error error
         .once((msg: string, key, _msg, _ev) => {
           ev = _ev;
           msg &&
             setMessages(
-              (messages) =>
-                messages && {
-                  [channel]: [...(messages[channel] || []), msg].filter(
+              (mess: any) =>
+                mess && {
+                  [channel]: [...(mess[channel] || []), msg].filter(
                     (data: any, i: number, arr: any[]) =>
                       arr.findIndex(
                         (d: any) => d?.data["#"] === data?.data["#"]
@@ -175,6 +179,7 @@ const useGun = (): {
                 }
             );
         });
+      // @ts-expect-error error
       return () => ev && ev.off();
     }, [channel]);
   };

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "@ledgerhq/react-ui/components/styled";
 import { Flex } from "@ledgerhq/react-ui";
 import { UserID, Message } from "../types";
