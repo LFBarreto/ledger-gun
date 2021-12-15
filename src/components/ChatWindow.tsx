@@ -20,16 +20,26 @@ export default function ChatWindow({
   messages = [],
   onSubmitMessage,
   children,
+  onSubmitCommand,
   ...rest
 }: Partial<{
   userID: UserID;
   messages: Message[];
   onSubmitMessage?: (m: string) => void;
   children: React.ReactNode;
+  onSubmitCommand?: (command: string) => void;
 }>): React.ReactElement {
   const ref = useRef<HTMLElement>();
   const handlePushMessage = useCallback(
-    (mess) => {
+    (mess?: string) => {
+      console.log("push message", mess);
+      if (!mess) return;
+      if (mess.startsWith("/") && onSubmitCommand) {
+        console.log("submitting command", mess);
+        onSubmitCommand(mess.trim());
+        return;
+      }
+
       onSubmitMessage && onSubmitMessage(mess);
     },
     [userID]

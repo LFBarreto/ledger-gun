@@ -25,8 +25,8 @@ const CommandItem = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: start;
   background-color: ${(p) =>
-    p.selected ? p.theme.colors.primary.c100 : "unset"};
-  color: ${(p) => (p.selected ? "black" : "unset")};
+    p.selected ? p.theme.colors.primary.c100 : p.theme.colors.neutral.c00};
+  color: ${(p) => (p.selected ? p.theme.colors.neutral.c00 : "unset")};
   padding: 5px;
 `;
 
