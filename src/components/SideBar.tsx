@@ -56,10 +56,15 @@ const Category = styled.div`
 `;
 
 const ChannelList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
   list-style-type: none;
 `;
 
 const ChannelListItem = styled.li<{ selected: boolean }>`
+  display: flex;
+  column-gap: 8px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -101,6 +106,11 @@ const AddChannelButton = styled(Button)`
 //   text-align: center;
 // `;
 
+const DeleteButton = styled(Button)`
+  padding: ${(props) => props.theme.space[1]}px;
+  border-width: 0;
+`;
+
 export type SideBarProps = {
   user: User;
   onClose: () => void;
@@ -114,7 +124,7 @@ const SideBar = ({
   onSelect,
   onCreate,
 }: SideBarProps): JSX.Element => {
-  const { channel, channels, logout } = useGun();
+  const { gun, removeChannel, logout, channel, channels } = useGun();
   const [isChannelFormOpen, setChannelFormOpen] = useState(false);
 
   const handleCreate = (value: string) => {
@@ -157,6 +167,11 @@ const SideBar = ({
   const onFollowedChange = noop; // TODO:
   const onBlackListChange = noop; // TODO:
 
+  const deleteChannel = (room: string) => {
+    gun.get("channels").get(room).put(null);
+    removeChannel(room);
+  };
+
   return (
     <Container>
       <Header>
@@ -197,6 +212,9 @@ const SideBar = ({
                 <ChannelList>
                   {sortedChannels.map((chan) => (
                     <ChannelListItem key={chan} selected={chan === channel}>
+                      <DeleteButton onClick={() => deleteChannel(chan)}>
+                        x
+                      </DeleteButton>
                       <div onClick={() => onSelect(chan)}>{chan}</div>
                     </ChannelListItem>
                   ))}

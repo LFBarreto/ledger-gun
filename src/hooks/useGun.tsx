@@ -61,6 +61,7 @@ const useGun = (): {
   channel: string;
   channels: string[];
   setChannel: (chan: string) => void;
+  removeChannel: (chan: string) => void;
   createChannel: (id: string) => void;
   messages: any[];
   sendMessage: (message: string) => void;
@@ -133,7 +134,11 @@ const useGun = (): {
     /* ---------------------- */
 
     gun.get("channels").on((ids: string) => {
-      setChannels(Object.keys(ids));
+      setChannels(
+        Object.entries(ids)
+          .filter(([_, value]) => value !== null)
+          .map(([key]) => key)
+      );
     });
 
     return () => gun.off();
@@ -265,6 +270,12 @@ const useGun = (): {
     gun.get("channels").get(id).put({ id, messages: {} });
   }, []);
 
+  const removeChannel = (id: string) => {
+    setChannels((channels: Array<string>) =>
+      channels.filter((channel: string) => channel !== id)
+    );
+  };
+
   return {
     createUser,
     login,
@@ -276,6 +287,7 @@ const useGun = (): {
     channels,
     channel: chan,
     setChannel: setChan,
+    removeChannel,
     createChannel,
     messages: chan ? messages?.[chan] ?? [] : [],
     updateMessages,
