@@ -46,7 +46,7 @@ function removeId(userIds: UserID[], userId: UserID) {
 const ENTER_KEY_CODE = 13;
 
 const UserProfileManager = ({
-  user,
+  user = {},
   onAliasChange,
   onFollowedChange,
   onBlackListChange,
