@@ -35,6 +35,7 @@ const Header = styled(Box).attrs({ withPadding: true })`
 const SideBarBody = styled(Box).attrs({ withPadding: true })`
   display: flex;
   flex-direction: column;
+  height: 100%;
   color: ${(props) => props.theme.colors.primary.c100};
   padding: ${(props) => props.theme.space[7]}px;
   width: 100%;
@@ -91,11 +92,6 @@ const ChannelListItem = styled.li<{ selected: boolean }>`
   a {
     text-decoration: none;
   }
-`;
-
-const AddChannelButton = styled(Button)`
-  flex: 1;
-  margin-left: ${(props) => props.theme.space[7]}px;
 `;
 
 // const Username = styled.span`
@@ -203,9 +199,7 @@ const SideBar = ({
           />
         ) : (
           <>
-            <AddChannelButton onClick={() => setChannelFormOpen(true)}>
-              New Room
-            </AddChannelButton>
+            <Button onClick={() => setChannelFormOpen(true)}>New Room</Button>
             <Categories>
               <Category>
                 <strong>{`> Public`}</strong>
