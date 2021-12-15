@@ -30,20 +30,17 @@ export default function ChatWindow({
   onSubmitCommand?: (command: string) => void;
 }>): React.ReactElement {
   const ref = useRef<HTMLElement>();
-  const handlePushMessage = useCallback(
-    (mess?: string) => {
-      console.log("push message", mess);
-      if (!mess) return;
-      if (mess.startsWith("/") && onSubmitCommand) {
-        console.log("submitting command", mess);
-        onSubmitCommand(mess.trim());
-        return;
-      }
+  const handlePushMessage = (mess?: string) => {
+    console.log("push message", mess);
+    if (!mess) return;
+    if (mess.startsWith("/") && onSubmitCommand) {
+      console.log("submitting command", mess);
+      onSubmitCommand(mess.trim());
+      return;
+    }
 
-      onSubmitMessage && onSubmitMessage(mess);
-    },
-    [userID]
-  );
+    onSubmitMessage && onSubmitMessage(mess);
+  };
 
   useEffect(() => {
     const t = setTimeout(() => {

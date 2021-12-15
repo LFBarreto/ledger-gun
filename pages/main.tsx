@@ -4,16 +4,6 @@ import { useRouter } from "next/router";
 import ChatWindow from "../src/components/ChatWindow";
 import useGun from "../src/hooks/useGun";
 import { useApi } from "../src/providers/LedgerLiveSDKProvider";
-import { Icons } from "@ledgerhq/react-ui";
-import styled from "styled-components";
-import { Button } from "@ledgerhq/react-ui";
-
-const RefreshButton = styled(Button)`
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
-`;
 
 const Layout = dynamic(() => import("../src/components/Layout"), {
   ssr: false,
@@ -28,10 +18,13 @@ export default function Main(): React.ReactElement {
     channel,
     messages,
     sendMessage,
-    updateMessages,
+    useUpdateChannels,
+    useUpdateMessages,
   } = useGun();
 
   const api = useApi();
+  useUpdateChannels();
+  useUpdateMessages(channel);
 
   useEffect(() => {
     if (!isLogged()) router.push("/");
@@ -72,9 +65,7 @@ export default function Main(): React.ReactElement {
             }
           }}
           onSubmitMessage={(message: string) => sendMessage(message)}
-        >
-          <RefreshButton Icon={Icons.RefreshRegular} onClick={updateMessages} />
-        </ChatWindow>
+        ></ChatWindow>
       ) : null}
     </Layout>
   );
