@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import LedgerLiveApi, { WindowMessageTransport } from "@ledgerhq/live-app-sdk";
 
 type LedgerLiveSDKContextType = {
@@ -15,27 +15,25 @@ const LedgerLiveSDKProvider = ({
 }: {
   children: React.ReactNode;
 }): React.ReactElement => {
-  const api = useRef<LedgerLiveApi | null>(null);
+  const [api, setApi] = useState<LedgerLiveApi | null>(null); //hacky shmacky
 
   useEffect(() => {
     const llapi = new LedgerLiveApi(new WindowMessageTransport());
-
-    api.current = llapi;
-
+    setApi(llapi);
     llapi.connect();
 
     return () => {
-      api.current = null;
+      setApi(null);
       void llapi.disconnect();
     };
   }, []);
 
-  if (!api.current) {
-    return <></>;
+  if (!api) {
+    return <>Cannot connect to the Live API</>;
   }
 
   return (
-    <LedgerLiveSDKContext.Provider value={{ api: api.current }}>
+    <LedgerLiveSDKContext.Provider value={{ api: api }}>
       {children}
     </LedgerLiveSDKContext.Provider>
   );
