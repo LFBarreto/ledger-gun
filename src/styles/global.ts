@@ -55,6 +55,15 @@ export const GlobalStyle = createGlobalStyle`
     box-shadow: none;
   }
 
+  :-webkit-autofill,
+  :-webkit-autofill:hover, 
+  :-webkit-autofill:focus, 
+  :-webkit-autofill:active{
+      -webkit-box-shadow: 0 0 0 30px ${(p) =>
+        p.theme.colors.background.main} inset !important;
+      -webkit-text-fill-color: ${(p) => p.theme.colors.primary.c100} !important;
+  }
+
   @font-face {
     font-family: "Inter";
     src: url("fonts/Inter-ExtraLight-BETA.woff2") format("woff2");
