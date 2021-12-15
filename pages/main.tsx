@@ -21,15 +21,8 @@ const Layout = dynamic(() => import("../src/components/Layout"), {
 
 export default function Main(): React.ReactElement {
   const router = useRouter();
-  const {
-    isLogged,
-    profile,
-    channel,
-    channels,
-    messages,
-    sendMessage,
-    updateMessages,
-  } = useGun();
+  const { isLogged, profile, channel, messages, sendMessage, updateMessages } =
+    useGun();
 
   const api = useApi();
 
@@ -38,7 +31,7 @@ export default function Main(): React.ReactElement {
   }, []);
 
   return (
-    <Layout user={profile} rooms={channels}>
+    <Layout user={profile}>
       {channel ? (
         <ChatWindow
           userID={profile?.alias}

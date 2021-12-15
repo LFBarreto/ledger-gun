@@ -71,11 +71,10 @@ const SplitPaneLayout = styled(SplitPane)`
 export type LayoutProps = {
   children?: ReactNode;
   user: any;
-  rooms: string[];
 };
 
-const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
-  const { channels, createChannel, setChannel } = useGun();
+const Layout = ({ children, user }: LayoutProps): JSX.Element => {
+  const { createChannel, setChannel } = useGun();
 
   const [isSidebarOpen, setSidebarOpen] = useLocalStorage(
     "layout-sidebar-open",
@@ -118,7 +117,6 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
       <Container>
         <SideBar
           user={user}
-          rooms={rooms}
           onClose={() => setSidebarOpen(false)}
           onSelect={() => null}
           onCreate={() => null}
@@ -138,7 +136,6 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
       >
         <SideBar
           user={user}
-          rooms={channels}
           onClose={() => setSidebarOpen(false)}
           onSelect={setChannel}
           onCreate={(id) => createChannel(id)}
