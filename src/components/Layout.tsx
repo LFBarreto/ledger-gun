@@ -3,9 +3,9 @@ import SplitPane from "react-split-pane";
 import styled from "styled-components";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-import { Room } from "../types";
 import SideBar from "./SideBar";
 import Button from "./Button";
+import useGun from "../hooks/useGun";
 
 const Container = styled.main`
   height: 100%;
@@ -70,10 +70,12 @@ const SplitPaneLayout = styled(SplitPane)`
 export type LayoutProps = {
   children?: ReactNode;
   user: any;
-  rooms: Room[];
+  rooms: string[];
 };
 
 const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
+  const { channels, createChannel, setChannel } = useGun();
+
   const [isSidebarOpen, setSidebarOpen] = useLocalStorage(
     "layout-sidebar-open",
     true
@@ -135,10 +137,10 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
       >
         <SideBar
           user={user}
-          rooms={rooms}
+          rooms={channels}
           onClose={() => setSidebarOpen(false)}
-          onSelect={() => null}
-          onCreate={() => null}
+          onSelect={setChannel}
+          onCreate={(id) => createChannel(id)}
         />
         <Content>{children}</Content>
       </SplitPaneLayout>

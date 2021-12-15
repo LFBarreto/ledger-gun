@@ -4,11 +4,11 @@ import { map, reduce, sortBy } from "lodash";
 
 import Button from "./Button";
 import Box from "./Box";
-import { Room, User } from "../types";
+import { User } from "../types";
 import useGun from "../hooks/useGun";
 
 type RoomTree<Keys extends string> = {
-  [K in Keys]: Room[];
+  [K in Keys]: string[];
 };
 
 const SideBarBody = styled(Box).attrs({ withPadding: true, withBorder: true })`
@@ -71,10 +71,10 @@ const Footer = styled.div`
 
 export type SideBarProps = {
   user: User;
-  rooms: Room[];
+  rooms: string[];
   onClose: () => void;
-  onSelect: (_: Room) => void;
-  onCreate: () => void;
+  onSelect: (_: string) => void;
+  onCreate: (_: string) => void;
 };
 
 const SideBar = ({
@@ -85,7 +85,7 @@ const SideBar = ({
   onCreate,
 }: SideBarProps): JSX.Element => {
   const { logout } = useGun();
-  const sortedRooms = sortBy(rooms, (room) => room.name);
+  const sortedRooms = sortBy(rooms, (room) => room);
 
   const emptyRoomTree: RoomTree<"public" | "private"> = {
     public: [],
@@ -95,12 +95,14 @@ const SideBar = ({
   const roomsByCategories = reduce(
     sortedRooms,
     (acc, room) => {
-      if (room.private) {
-        return {
-          ...acc,
-          private: acc.private.concat([room]),
-        };
-      }
+      /**
+        if (room.private) {
+          return {
+            ...acc,
+            private: acc.private.concat([room]),
+          };
+        }
+      */
       return {
         ...acc,
         public: acc.public.concat([room]),
@@ -113,7 +115,9 @@ const SideBar = ({
     <SideBarBody>
       <div style={{ display: "flex" }}>
         <Button onClick={onClose}>{"<<"}</Button>
-        <AddRoomButton onClick={onCreate}>New Room</AddRoomButton>
+        <AddRoomButton onClick={() => onCreate("general")}>
+          New Room
+        </AddRoomButton>
       </div>
       <Categories>
         {map(roomsByCategories, (rooms, category) => (
@@ -121,10 +125,8 @@ const SideBar = ({
             <strong>{`> ${category}`}</strong>
             <RoomList>
               {rooms.map((room) => (
-                <RoomListItem key={room.id}>
-                  <a href="#" onClick={() => onSelect(room)}>
-                    {room.name}
-                  </a>
+                <RoomListItem key={room}>
+                  <div onClick={() => onSelect(room)}>{room}</div>
                 </RoomListItem>
               ))}
             </RoomList>
