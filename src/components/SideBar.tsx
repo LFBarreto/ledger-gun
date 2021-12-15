@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { map, reduce, sortBy } from "lodash";
 
 import Button from "./Button";
 import Box from "./Box";
-import { Room, User } from "../types";
+import { User } from "../types";
 import useGun from "../hooks/useGun";
+import ChannelForm from "./ChannelForm";
 
 type RoomTree<Keys extends string> = {
-  [K in Keys]: Room[];
+  [K in Keys]: string[];
 };
 
 const SideBarBody = styled(Box).attrs({ withPadding: true, withBorder: true })`
@@ -66,15 +67,24 @@ const AddRoomButton = styled(Button)`
 
 const Footer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+`;
+
+const Username = styled.span`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 1rem;
+  text-align: center;
 `;
 
 export type SideBarProps = {
   user: User;
-  rooms: Room[];
+  rooms: string[];
   onClose: () => void;
-  onSelect: (_: Room) => void;
-  onCreate: () => void;
+  onSelect: (_: string) => void;
+  onCreate: (_: string) => void;
 };
 
 const SideBar = ({
@@ -85,7 +95,25 @@ const SideBar = ({
   onCreate,
 }: SideBarProps): JSX.Element => {
   const { logout } = useGun();
-  const sortedRooms = sortBy(rooms, (room) => room.name);
+  const [isChannelFormOpen, setChannelFormOpen] = useState(false);
+
+  const handleCreate = (value: string) => {
+    onCreate(value);
+    setChannelFormOpen(false);
+  };
+
+  if (isChannelFormOpen) {
+    return (
+      <SideBarBody>
+        <ChannelForm
+          onSubmit={handleCreate}
+          onClose={() => setChannelFormOpen(false)}
+        />
+      </SideBarBody>
+    );
+  }
+
+  const sortedRooms = sortBy(rooms, (room) => room);
 
   const emptyRoomTree: RoomTree<"public" | "private"> = {
     public: [],
@@ -95,12 +123,14 @@ const SideBar = ({
   const roomsByCategories = reduce(
     sortedRooms,
     (acc, room) => {
-      if (room.private) {
-        return {
-          ...acc,
-          private: acc.private.concat([room]),
-        };
-      }
+      /**
+        if (room.private) {
+          return {
+            ...acc,
+            private: acc.private.concat([room]),
+          };
+        }
+      */
       return {
         ...acc,
         public: acc.public.concat([room]),
@@ -113,7 +143,9 @@ const SideBar = ({
     <SideBarBody>
       <div style={{ display: "flex" }}>
         <Button onClick={onClose}>{"<<"}</Button>
-        <AddRoomButton onClick={onCreate}>New Room</AddRoomButton>
+        <AddRoomButton onClick={() => setChannelFormOpen(true)}>
+          New Room
+        </AddRoomButton>
       </div>
       <Categories>
         {map(roomsByCategories, (rooms, category) => (
@@ -121,10 +153,8 @@ const SideBar = ({
             <strong>{`> ${category}`}</strong>
             <RoomList>
               {rooms.map((room) => (
-                <RoomListItem key={room.id}>
-                  <a href="#" onClick={() => onSelect(room)}>
-                    {room.name}
-                  </a>
+                <RoomListItem key={room}>
+                  <div onClick={() => onSelect(room)}>{room}</div>
                 </RoomListItem>
               ))}
             </RoomList>
@@ -132,7 +162,8 @@ const SideBar = ({
         ))}
       </Categories>
       <Footer>
-        <span>{user?.alias}</span> - <span onClick={logout}>logout</span>
+        <Username>{user?.alias}</Username>
+        <Button onClick={logout}>Logout</Button>
       </Footer>
     </SideBarBody>
   );

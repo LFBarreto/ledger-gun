@@ -6,6 +6,7 @@ import { appWithTranslation } from "next-i18next";
 import { StyleProvider } from "../src/styles/StyleProvider";
 import "modern-normalize";
 import LedgerLiveSDKProvider from "../src/providers/LedgerLiveSDKProvider";
+import { GunProvider } from "../src/hooks/useGun";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter();
@@ -24,7 +25,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       </Head>
       <StyleProvider selectedPalette={v3SelectedPalettes}>
         <LedgerLiveSDKProvider>
-          <Component {...pageProps} />
+          <GunProvider>
+            <Component {...pageProps} />
+          </GunProvider>
         </LedgerLiveSDKProvider>
       </StyleProvider>
     </>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import styled from "@ledgerhq/react-ui/components/styled";
 import { Flex } from "@ledgerhq/react-ui";
 import { UserID, Message } from "../types";
@@ -24,24 +24,12 @@ export default function ChatWindow({
 }: Partial<{
   userID: UserID;
   messages: Message[];
-  onSubmitMessage?: (m: Message) => void;
+  onSubmitMessage?: (m: string) => void;
   children: React.ReactNode;
 }>): React.ReactElement {
-  const [m, setM] = useState(messages);
   const ref = useRef<HTMLElement>();
   const handlePushMessage = useCallback(
     (mess) => {
-      setM((m) =>
-        m.concat([
-          {
-            message: mess,
-            from: userID,
-            id: "" + Date.now(),
-            meta: { creationDate: new Date() },
-            data: {},
-          },
-        ])
-      );
       onSubmitMessage && onSubmitMessage(mess);
     },
     [userID]
@@ -74,11 +62,11 @@ export default function ChatWindow({
     >
       <ChatContainer ref={ref}>
         {children}
-        {m.map((message, i) => (
+        {messages.map((message, i) => (
           <MessageComponent
             key={message?.id + i}
             message={message}
-            showUsername={i === 0 || m[i - 1].from !== message.from}
+            showUsername={i === 0 || messages[i - 1].from !== message.from}
             isReverse={userID === message.from}
           />
         ))}
