@@ -43,3 +43,5 @@ yarn-error.log*
 ./tsconfig.tsbuildinfo
 
 ./radata
+
+/experiments
