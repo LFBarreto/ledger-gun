@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import styled from "styled-components";
-import { map, noop, reduce, sortBy } from "lodash";
+import styled, { css } from "styled-components";
+import { noop, sortBy } from "lodash";
 
 import Button, { BaseButton } from "./Button";
 import Box from "./Box";
@@ -10,9 +10,9 @@ import useGun from "../hooks/useGun";
 import ChannelForm from "./ChannelForm";
 import UserProfileManager from "./UserProfileManager";
 
-type RoomTree<Keys extends string> = {
-  [K in Keys]: string[];
-};
+// type ChannelTree<Keys extends string> = {
+//   [K in Keys]: string[];
+// };
 
 const Container = styled(Box).attrs({ withBorder: true })`
   display: flex;
@@ -55,11 +55,11 @@ const Category = styled.div`
   margin-top: ${(props) => props.theme.space[7]}px;
 `;
 
-const RoomList = styled.ul`
+const ChannelList = styled.ul`
   list-style-type: none;
 `;
 
-const RoomListItem = styled.li`
+const ChannelListItem = styled.li<{ selected: boolean }>`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -76,27 +76,33 @@ const RoomListItem = styled.li`
     color: ${(props) => props.theme.colors.background.main};
   }
 
+  ${(p) =>
+    p.selected &&
+    css`
+      background: ${(props) => props.theme.colors.primary.c100};
+      color: ${(props) => props.theme.colors.background.main};
+    `}
+
   a {
     text-decoration: none;
   }
 `;
 
-const AddRoomButton = styled(Button)`
+const AddChannelButton = styled(Button)`
   flex: 1;
   margin-left: ${(props) => props.theme.space[7]}px;
 `;
 
-const Username = styled.span`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-bottom: 1rem;
-  text-align: center;
-`;
+// const Username = styled.span`
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   margin-bottom: 1rem;
+//   text-align: center;
+// `;
 
 export type SideBarProps = {
   user: User;
-  rooms: string[];
   onClose: () => void;
   onSelect: (_: string) => void;
   onCreate: (_: string) => void;
@@ -104,12 +110,11 @@ export type SideBarProps = {
 
 const SideBar = ({
   user,
-  rooms,
   onClose,
   onSelect,
   onCreate,
 }: SideBarProps): JSX.Element => {
-  const { logout } = useGun();
+  const { channel, channels, logout } = useGun();
   const [isChannelFormOpen, setChannelFormOpen] = useState(false);
 
   const handleCreate = (value: string) => {
@@ -118,35 +123,35 @@ const SideBar = ({
   };
 
   const [showUserProfile, setShowUserProfile] = useState(false);
-  const sortedRooms = sortBy(rooms, (room) => room);
+  const sortedChannels = sortBy(channels, (chan) => chan);
 
   const toggleShowUserProfile = useCallback(() => {
     setShowUserProfile(!showUserProfile);
   }, [showUserProfile, setShowUserProfile]);
 
-  const emptyRoomTree: RoomTree<"public" | "private"> = {
-    public: [],
-    private: [],
-  };
+  // const emptyChannelTree: ChannelTree<"public" | "private"> = {
+  //   public: [],
+  //   private: [],
+  // };
 
-  const roomsByCategories = reduce(
-    sortedRooms,
-    (acc, room) => {
-      /**
-        if (room.private) {
-          return {
-            ...acc,
-            private: acc.private.concat([room]),
-          };
-        }
-      */
-      return {
-        ...acc,
-        public: acc.public.concat([room]),
-      };
-    },
-    emptyRoomTree
-  );
+  // const channelsByCategories = reduce(
+  //   sortedChannels,
+  //   (acc, channel) => {
+  //     /**
+  //       if (room.private) {
+  //         return {
+  //           ...acc,
+  //           private: acc.private.concat([room]),
+  //         };
+  //       }
+  //     */
+  //     return {
+  //       ...acc,
+  //       public: acc.public.concat([channel]),
+  //     };
+  //   },
+  //   emptyChannelTree
+  // );
 
   const onAliasChange = noop; // TODO:
   const onFollowedChange = noop; // TODO:
@@ -183,22 +188,20 @@ const SideBar = ({
           />
         ) : (
           <>
-            <AddRoomButton onClick={() => setChannelFormOpen(true)}>
+            <AddChannelButton onClick={() => setChannelFormOpen(true)}>
               New Room
-            </AddRoomButton>
+            </AddChannelButton>
             <Categories>
-              {map(roomsByCategories, (rooms, category) => (
-                <Category key={category}>
-                  <strong>{`> ${category}`}</strong>
-                  <RoomList>
-                    {rooms.map((room) => (
-                      <RoomListItem key={room}>
-                        <div onClick={() => onSelect(room)}>{room}</div>
-                      </RoomListItem>
-                    ))}
-                  </RoomList>
-                </Category>
-              ))}
+              <Category>
+                <strong>{`> Public`}</strong>
+                <ChannelList>
+                  {sortedChannels.map((chan) => (
+                    <ChannelListItem key={chan} selected={chan === channel}>
+                      <div onClick={() => onSelect(chan)}>{chan}</div>
+                    </ChannelListItem>
+                  ))}
+                </ChannelList>
+              </Category>
             </Categories>
           </>
         )}

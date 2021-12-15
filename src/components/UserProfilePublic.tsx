@@ -1,12 +1,8 @@
-import React, { useCallback, useRef, useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import { PublicUser, UserID } from "../types";
 import { Flex } from "@ledgerhq/react-ui";
-import Button from "./Button";
-import Box from "./Box";
 import KeyValueText from "./KeyValueText";
 import QRCode from "./QRCode";
-import Text from "./Text";
 import UserList from "./UserList";
 
 import { Container } from "./UserProfileManager";

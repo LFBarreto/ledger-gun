@@ -11,7 +11,7 @@ function createQRCodeASCII(data) {
   return qr.createASCII(1);
 }
 
-const QRCode = ({ data }) => {
+const QRCode = ({ data = "" }) => {
   const qr = useMemo(() => {
     const rawQr = createQRCodeASCII(data);
     return rawQr;

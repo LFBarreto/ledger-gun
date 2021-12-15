@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import { User, UserID } from "../types";
 import { Flex } from "@ledgerhq/react-ui";
-import Button, { BaseButton } from "./Button";
+import { BaseButton } from "./Button";
 import Box from "./Box";
 import QRCode from "./QRCode";
 import KeyValueText from "./KeyValueText";
@@ -10,8 +10,7 @@ import Text from "./Text";
 import UserList from "./UserList";
 
 type Props = {
-  user: PublicUser;
-  onClose: () => void;
+  user: User;
   onAliasChange: (alias: string) => void;
   onFollowedChange: (followers: UserID[]) => void;
   onBlackListChange: (blackList: UserID[]) => void;
@@ -63,7 +62,7 @@ const UserProfileManager = ({
   } = user;
   const [editingAlias, setEditingAlias] = useState(false);
   const [aliasEdit, setAliasEdit] = useState(alias);
-  const aliasInput = useRef(null);
+  const aliasInput = useRef<HTMLInputElement>(null);
 
   const unfollowUser = useCallback(
     (id: UserID) => {
@@ -81,9 +80,9 @@ const UserProfileManager = ({
 
   const handleSubmit = useCallback(() => {
     onAliasChange(aliasEdit);
-    aliasInput.current !== null && aliasInput.current.blur();
+    aliasInput.current?.blur();
     setEditingAlias(false);
-  }, [aliasEdit]);
+  }, [aliasInput, aliasEdit]);
 
   const handleAliasChange = useCallback(
     (event) => setAliasEdit(event.target.value),
