@@ -47,8 +47,8 @@ export const GunProvider = ({ children }: any) => {
 
 const gun = Gun([
   "http://localhost:3000/gun",
-  // "https://ledger-gun.vercel.app/gun",
-  // "https://gun-hackathon-test.herokuapp.com/gun",
+  "https://ledger-gun.vercel.app/gun",
+  "https://gun-hackathon-test.herokuapp.com/gun",
 ]);
 const user = gun.user().recall({ sessionStorage: true });
 
@@ -239,10 +239,8 @@ const useGun = (): {
     [gun]
   );
 
-  console.log("outer", chan);
   const sendMessage = useCallback(
     async (message) => {
-      console.log("inner", chan);
       if (chan) {
         const id = new Date().toISOString();
         const alias = await user.get("alias");
