@@ -2,7 +2,7 @@
 import Gun from "gun";
 import "gun/sea";
 import "gun/axe";
-import {
+import React, {
   useCallback,
   useEffect,
   useState,
@@ -40,13 +40,15 @@ export const GunProvider = ({ children }: any) => {
     setMessages,
   };
 
+  console.log("GunProvider messages", { ...messages });
+
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
 };
 
 const gun = Gun([
   "http://localhost:3000/gun",
-  "https://ledger-gun.vercel.app/gun",
-  "https://gun-hackathon-test.herokuapp.com/gun",
+  // "https://ledger-gun.vercel.app/gun",
+  // "https://gun-hackathon-test.herokuapp.com/gun",
 ]);
 const user = gun.user().recall({ sessionStorage: true });
 
@@ -63,10 +65,10 @@ const useGun = (): {
   setChannel: (chan: string) => void;
   removeChannel: (chan: string) => void;
   createChannel: (id: string) => void;
+  useUpdateChannels: () => void;
   messages: any[];
   sendMessage: (message: string) => void;
-  updateMessages: () => void;
-  updateChannels: () => void;
+  useUpdateMessages: (chan: string) => void;
 } => {
   const {
     profile,
@@ -143,65 +145,47 @@ const useGun = (): {
     // }
     /* eslint-enable no-console */
     /* ---------------------- */
-
-    updateChannels();
-
-    return () => gun.off();
   }, []);
 
-  const updateMessages = useCallback(() => {
-    if (chan) {
-      console.log("update messages", chan);
-      const m = gun.get("channels").get(chan).get("messages");
-      // @ts-expect-error error
-      m.map().on((msgs: any, key: any, _msg: any, ev: any) => {
-        if (msgs) {
-          const M = messages;
-          if (!M[chan]) M[chan] = [];
-          M[chan] = M[chan]
-            .concat([msgs])
-            .filter(
-              (data: any, i: number, arr: any[]) =>
-                arr.findIndex((d: any) => d.data["#"] === data.data["#"]) === i
-            );
-          console.log({ M, msgs });
-          setMessages(M);
-          ev.off();
-        }
-      });
-    }
-  }, [chan, setMessages, messages]);
-
-  useEffect(() => {
-    console.log("subscribe to", chan);
-    let ev: any = null;
-    if (chan) {
-      const messages = gun.get("channels").get(chan).get("messages");
-      // @ts-expect-error error
-      messages.map().on((msgs: any, key: any, _msg: any, _ev: any) => {
-        console.log({ msgs }, "subs");
+  const useUpdateChannels = () => {
+    useEffect(() => {
+      let ev = null;
+      gun.get("channels").on((ids: string, key, _msg, _ev) => {
         ev = _ev;
-        if (msgs) {
-          setMessages((m: any) => {
-            if (!m[chan]) m[chan] = [];
-            m[chan] = m[chan]
-              .concat([msgs])
-              .filter(
-                (data: any, i: number, arr: any[]) =>
-                  arr.findIndex((d: any) => d.data["#"] === data.data["#"]) ===
-                  i
-              );
-            return m;
-          });
-        }
+        setChannels(Object.keys(ids).filter((id) => id !== "_"));
       });
-    }
 
-    return () => {
-      ev?.off();
-      console.log("unsubscribe to", chan);
-    };
-  }, [chan]);
+      return () => ev && ev.off();
+    }, []);
+  };
+
+  const useUpdateMessages = (channel: string) => {
+    useEffect(() => {
+      if (!channel) return;
+      let ev = null;
+      gun
+        .get("channels")
+        .get(channel)
+        .get("messages")
+        .map()
+        .once((msg: string, key, _msg, _ev) => {
+          ev = _ev;
+          msg &&
+            setMessages(
+              (messages) =>
+                messages && {
+                  [channel]: [...(messages[channel] || []), msg].filter(
+                    (data: any, i: number, arr: any[]) =>
+                      arr.findIndex(
+                        (d: any) => d.data["#"] === data.data["#"]
+                      ) === i
+                  ),
+                }
+            );
+        });
+      return () => ev && ev.off();
+    }, [channel]);
+  };
 
   const login = useCallback(
     (login, password) => {
@@ -255,8 +239,10 @@ const useGun = (): {
     [gun]
   );
 
+  console.log("outer", chan);
   const sendMessage = useCallback(
     async (message) => {
+      console.log("inner", chan);
       if (chan) {
         const id = new Date().toISOString();
         const alias = await user.get("alias");
@@ -264,23 +250,24 @@ const useGun = (): {
           .get("channels")
           .get(chan)
           .get("messages")
-          .get(id)
           .put({
-            id,
-            from: alias,
-            message,
-            data: {},
-            meta: { creationDate: id },
+            [id]: {
+              id,
+              from: alias,
+              message,
+              data: {},
+              meta: { creationDate: id },
+            },
           });
-        updateMessages();
       }
     },
-    [chan, updateMessages]
+    [chan]
   );
 
   const createChannel = useCallback((id: string) => {
-    gun.get("channels").get(id).put({ id, messages: {} });
-    updateChannels();
+    const channel = Gun().get(id).put({ id, messages: {} });
+    gun.get("channels").set(channel);
+    // setChannels((channels) => [...channels, id]);
   }, []);
 
   const removeChannel = (id: string) => {
@@ -303,9 +290,9 @@ const useGun = (): {
     removeChannel,
     createChannel,
     messages: chan ? messages?.[chan] ?? [] : [],
-    updateMessages,
     sendMessage,
-    updateChannels,
+    useUpdateChannels,
+    useUpdateMessages,
   };
 };
 
