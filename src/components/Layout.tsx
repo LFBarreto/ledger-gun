@@ -66,6 +66,10 @@ const SplitPaneLayout = styled(SplitPane)`
   .Resizer.disabled:hover {
     border-color: transparent;
   }
+
+  .Pane2 {
+    overflow: hidden;
+  }
 `;
 
 export type LayoutProps = {
