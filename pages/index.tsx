@@ -47,7 +47,6 @@ const DebugApp = (): React.ReactElement => {
       });
 
       if (res) {
-        console.log("accountid:", account.id);
         login(account.id, res);
       }
 
