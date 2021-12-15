@@ -26,7 +26,6 @@ export default function Main(): React.ReactElement {
     profile,
     user,
     channel,
-    channels,
     messages,
     sendMessage,
     updateMessages,
