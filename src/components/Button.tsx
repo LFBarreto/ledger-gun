@@ -1,14 +1,12 @@
 import styled from "styled-components";
 
-const Button = styled.button`
+export const BaseButton = styled.button`
   font-family: monospace;
   font-size: 1.1rem;
   line-height: 1.5rem;
-  border: 2px solid ${(props) => props.theme.colors.primary.c100};
-  border-radius: 0;
   color: ${(props) => props.theme.colors.primary.c100};
   background: ${(props) => props.theme.colors.background.main};
-  padding: ${(props) => props.theme.space[3]}px;
+  border: transparent;
 
   :hover {
     background: ${(props) => props.theme.colors.primary.c100};
@@ -20,6 +18,12 @@ const Button = styled.button`
     background: ${(props) => props.theme.colors.primary.c100};
     color: ${(props) => props.theme.colors.background.main};
   }
+`;
+
+const Button = styled(BaseButton)`
+  border: 2px solid ${(props) => props.theme.colors.primary.c100};
+  border-radius: 0;
+  padding: ${(props) => props.theme.space[3]}px;
 `;
 
 export default Button;

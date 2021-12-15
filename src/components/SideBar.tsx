@@ -1,29 +1,50 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { map, reduce, sortBy } from "lodash";
+import { map, noop, reduce, sortBy } from "lodash";
 
-import Button from "./Button";
+import Button, { BaseButton } from "./Button";
 import Box from "./Box";
+import Text from "./Text";
 import { User } from "../types";
 import useGun from "../hooks/useGun";
 import ChannelForm from "./ChannelForm";
+import UserProfileManager from "./UserProfileManager";
 
 type RoomTree<Keys extends string> = {
   [K in Keys]: string[];
 };
 
-const SideBarBody = styled(Box).attrs({ withPadding: true, withBorder: true })`
+const Container = styled(Box).attrs({ withBorder: true })`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  font-family: monospace;
+  line-height: 1.5rem;
+  font-size: 1.1rem;
+`;
+
+const Header = styled(Box).attrs({ withPadding: true })`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 2px solid ${(props) => props.theme.colors.primary.c100};
+`;
+
+const SideBarBody = styled(Box).attrs({ withPadding: true })`
   display: flex;
   flex-direction: column;
   color: ${(props) => props.theme.colors.primary.c100};
-  font-family: monospace;
-  line-height: 1.5rem;
-  width: 100%;
-  border: 2px solid ${(props) => props.theme.colors.primary.c100};
   padding: ${(props) => props.theme.space[7]}px;
-  font-size: 1.1rem;
-  height: 100%;
   width: 100%;
+  overflow: scroll;
+`;
+
+const Footer = styled(Box).attrs({ withPadding: true })`
+  border-top: 2px solid ${(props) => props.theme.colors.primary.c100};
+  display: flex;
+  justify-content: space-evenly;
 `;
 
 const Categories = styled.div`
@@ -65,12 +86,6 @@ const AddRoomButton = styled(Button)`
   margin-left: ${(props) => props.theme.space[7]}px;
 `;
 
-const Footer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
 const Username = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
@@ -102,18 +117,12 @@ const SideBar = ({
     setChannelFormOpen(false);
   };
 
-  if (isChannelFormOpen) {
-    return (
-      <SideBarBody>
-        <ChannelForm
-          onSubmit={handleCreate}
-          onClose={() => setChannelFormOpen(false)}
-        />
-      </SideBarBody>
-    );
-  }
-
+  const [showUserProfile, setShowUserProfile] = useState(false);
   const sortedRooms = sortBy(rooms, (room) => room);
+
+  const toggleShowUserProfile = useCallback(() => {
+    setShowUserProfile(!showUserProfile);
+  }, [showUserProfile, setShowUserProfile]);
 
   const emptyRoomTree: RoomTree<"public" | "private"> = {
     public: [],
@@ -139,33 +148,66 @@ const SideBar = ({
     emptyRoomTree
   );
 
+  const onAliasChange = noop; // TODO:
+  const onFollowedChange = noop; // TODO:
+  const onBlackListChange = noop; // TODO:
+
   return (
-    <SideBarBody>
-      <div style={{ display: "flex" }}>
-        <Button onClick={onClose}>{"<<"}</Button>
-        <AddRoomButton onClick={() => setChannelFormOpen(true)}>
-          New Room
-        </AddRoomButton>
-      </div>
-      <Categories>
-        {map(roomsByCategories, (rooms, category) => (
-          <Category key={category}>
-            <strong>{`> ${category}`}</strong>
-            <RoomList>
-              {rooms.map((room) => (
-                <RoomListItem key={room}>
-                  <div onClick={() => onSelect(room)}>{room}</div>
-                </RoomListItem>
+    <Container>
+      <Header>
+        <Button
+          onClick={showUserProfile ? toggleShowUserProfile : onClose}
+          style={{
+            whiteSpace: "pre",
+            alignSelf: "flex-start",
+          }}
+        >
+          {showUserProfile ? "⤫" : "<<"}
+        </Button>
+        <Text style={{ flex: 1, textAlign: "center" }}>
+          {showUserProfile ? "PROFILE" : "ROOMS"}
+        </Text>
+      </Header>
+      <SideBarBody>
+        {showUserProfile ? (
+          <UserProfileManager
+            user={user}
+            onAliasChange={onAliasChange}
+            onFollowedChange={onFollowedChange}
+            onBlackListChange={onBlackListChange}
+          />
+        ) : isChannelFormOpen ? (
+          <ChannelForm
+            onSubmit={handleCreate}
+            onClose={() => setChannelFormOpen(false)}
+          />
+        ) : (
+          <>
+            <AddRoomButton onClick={() => setChannelFormOpen(true)}>
+              New Room
+            </AddRoomButton>
+            <Categories>
+              {map(roomsByCategories, (rooms, category) => (
+                <Category key={category}>
+                  <strong>{`> ${category}`}</strong>
+                  <RoomList>
+                    {rooms.map((room) => (
+                      <RoomListItem key={room}>
+                        <div onClick={() => onSelect(room)}>{room}</div>
+                      </RoomListItem>
+                    ))}
+                  </RoomList>
+                </Category>
               ))}
-            </RoomList>
-          </Category>
-        ))}
-      </Categories>
+            </Categories>
+          </>
+        )}
+      </SideBarBody>
       <Footer>
-        <Username>{user?.alias}</Username>
-        <Button onClick={logout}>Logout</Button>
+        <BaseButton onClick={toggleShowUserProfile}>[{user?.alias}]</BaseButton>
+        <BaseButton onClick={logout}>[logout]</BaseButton>
       </Footer>
-    </SideBarBody>
+    </Container>
   );
 };
 

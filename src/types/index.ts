@@ -33,6 +33,14 @@ export interface User {
   meta: MetaData;
 }
 
+export type PublicUser = Pick<
+  User,
+  "id" | "alias" | "followers" | "followed"
+> & {
+  address: string;
+  currency: string;
+};
+
 export interface Room {
   id: string;
   name: string;
