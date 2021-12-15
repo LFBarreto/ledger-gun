@@ -125,6 +125,7 @@ const Layout = ({
         <SideBar
           user={user}
           rooms={rooms}
+          currentChannel={currentChannel}
           onClose={() => setSidebarOpen(false)}
           onSelect={() => null}
           onCreate={() => null}
