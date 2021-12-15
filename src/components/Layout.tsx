@@ -3,7 +3,7 @@ import SplitPane from "react-split-pane";
 import styled from "styled-components";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-import { Room, User } from "../types";
+import { Room } from "../types";
 import SideBar from "./SideBar";
 import Button from "./Button";
 
@@ -14,8 +14,9 @@ const Container = styled.main`
 `;
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: ${(props) => props.theme.space[3]}px;
-  border: 2px solid ${(props) => props.theme.colors.primary.c100};
   background: ${(props) => props.theme.colors.background.main};
   height: 100%;
 `;
@@ -68,7 +69,7 @@ const SplitPaneLayout = styled(SplitPane)`
 
 export type LayoutProps = {
   children?: ReactNode;
-  user: User;
+  user: any;
   rooms: Room[];
 };
 
@@ -113,7 +114,7 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
     return (
       <Container>
         <SideBar
-          user={user as any}
+          user={user}
           rooms={rooms}
           onClose={() => setSidebarOpen(false)}
           onSelect={() => null}
@@ -133,7 +134,7 @@ const Layout = ({ children, user, rooms }: LayoutProps): JSX.Element => {
         onChange={setSidebarWidth}
       >
         <SideBar
-          user={user as any}
+          user={user}
           rooms={rooms}
           onClose={() => setSidebarOpen(false)}
           onSelect={() => null}

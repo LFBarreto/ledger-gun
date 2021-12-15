@@ -9,23 +9,19 @@ const Layout = dynamic(() => import("../src/components/Layout"), {
   ssr: false,
 });
 
-export default function Main({
-  user = mock.Users[0],
-}: {
-  user: any;
-}): React.ReactElement {
+export default function Main(): React.ReactElement {
   const rooms = mock.Rooms;
   const messages = mock.Messages;
   const router = useRouter();
-  const { isLogged } = useGun();
+  const { isLogged, profile } = useGun();
 
   useEffect(() => {
     if (!isLogged()) router.push("/");
   }, []);
 
   return (
-    <Layout user={user as any} rooms={rooms}>
-      <ChatWindow userID={user.alias} messages={messages as any} />
+    <Layout user={profile} rooms={rooms}>
+      <ChatWindow userID={profile?.alias} messages={messages as any} />
     </Layout>
   );
 }

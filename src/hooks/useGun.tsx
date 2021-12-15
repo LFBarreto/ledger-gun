@@ -1,12 +1,24 @@
 import Gun from "gun";
 import "gun/sea";
 import "gun/axe";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 let gun: any;
 let user: any;
 
-const useGun = () => {
+const useGun = (): {
+  createUser: (username: string, password: string) => Promise<unknown>;
+  login: (username: string, password: string) => Promise<unknown>;
+  logout: () => void;
+  gun: any;
+  user: any;
+  profile: any;
+  isLogged: () => boolean;
+} => {
+  const [profile, setProfile] = useState<any>();
+  const router = useRouter();
+
   useEffect(() => {
     gun = Gun([
       "http://localhost:3000/gun",
@@ -14,7 +26,10 @@ const useGun = () => {
       "https://gun-hackathon-test.herokuapp.com/gun",
     ]);
     user = gun.user().recall({ sessionStorage: true });
-    gun.on("auth", (...args: any) => console.log("on auth", ...args));
+    gun.on("auth", async () => {
+      const pro = await user; // username string
+      setProfile(pro);
+    });
     return () => gun.off();
   }, []);
 
@@ -33,6 +48,12 @@ const useGun = () => {
 
   const isLogged = useCallback(() => user.is, [user]);
 
+  const logout = useCallback(() => {
+    setProfile(null);
+    user.leave();
+    router.push("/");
+  }, []);
+
   const createUser = useCallback(
     (username, password) => {
       return new Promise((resolve, reject) => {
@@ -40,14 +61,14 @@ const useGun = () => {
         user
           .create(username, password, ({ err }: any) => {
             if (err) {
-              reject(false);
+              return login(username, password).then(resolve, reject);
             } else {
-              login(username, password).then(resolve, reject);
+              reject(false);
             }
           })
           .on((ack: any) => {
             const infos = { createdAt: Date.now() };
-            user.get("profile").set(infos);
+            user.set(infos);
             // const pair = SEA.pair((keys) => console.log("SEA keys", keys));
             resolve(ack);
           });
@@ -59,7 +80,10 @@ const useGun = () => {
   return {
     createUser,
     login,
+    logout,
     gun,
+    user,
+    profile,
     isLogged,
   };
 };

@@ -5,6 +5,7 @@ import { map, reduce, sortBy } from "lodash";
 import Button from "./Button";
 import Box from "./Box";
 import { Room, User } from "../types";
+import useGun from "../hooks/useGun";
 
 type RoomTree<Keys extends string> = {
   [K in Keys]: Room[];
@@ -83,6 +84,7 @@ const SideBar = ({
   onSelect,
   onCreate,
 }: SideBarProps): JSX.Element => {
+  const { logout } = useGun();
   const sortedRooms = sortBy(rooms, (room) => room.name);
 
   const emptyRoomTree: RoomTree<"public" | "private"> = {
@@ -130,7 +132,7 @@ const SideBar = ({
         ))}
       </Categories>
       <Footer>
-        <span>{user.alias}</span>
+        <span>{user?.alias}</span> - <span onClick={logout}>logout</span>
       </Footer>
     </SideBarBody>
   );
