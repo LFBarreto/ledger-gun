@@ -11,7 +11,8 @@ const Layout = dynamic(() => import("../src/components/Layout"), {
 
 export default function Main(): React.ReactElement {
   const router = useRouter();
-  const { isLogged, profile, channel, channels, messages, sendMessage } = useGun();
+  const { isLogged, profile, channel, channels, messages, sendMessage } =
+    useGun();
 
   const api = useApi();
 
@@ -29,13 +30,16 @@ export default function Main(): React.ReactElement {
             console.log("command submitted", command);
             switch (command) {
               case "/send":
-                sendMessage("Hello, you can send me your wallet address to send me your sweet sweet money?: ");
+                sendMessage(
+                  "Hello, you can send me your wallet address to send me your sweet sweet money?: "
+                );
                 break;
               case "/request":
                 if (profile) {
                   api?.receive(profile.alias).then((accoundAddress: string) => {
                     sendMessage(
-                      "Hello, you can send me your sweet sweet money in the following address: " + accoundAddress
+                      "Hello, you can send me your sweet sweet money in the following address: " +
+                        accoundAddress
                     );
                   });
                 } else {
@@ -43,7 +47,9 @@ export default function Main(): React.ReactElement {
                 }
                 break;
               case "/giphy":
-                sendMessage("Hello, you can send me your wallet address to send me your sweet sweet money?: ");
+                sendMessage(
+                  "Hello, you can send me your wallet address to send me your sweet sweet money?: "
+                );
                 break;
             }
           }}
