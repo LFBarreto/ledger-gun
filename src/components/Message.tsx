@@ -11,9 +11,7 @@ const TextBody = styled.div<{ isReverse: boolean }>`
   color: ${(props) => props.theme.colors.primary.c100};
   font-family: monospace;
   font-size: 0.9rem;
-  border-${(props) => (props.isReverse ? "right" : "left")}: 2px solid ${(
-  props
-) => props.theme.colors.primary.c100};
+  border-${(props) => (props.isReverse ? "right" : "left")}: 2px solid ${(props) => props.theme.colors.primary.c100};
   padding: ${(props) => props.theme.space[4]}px;
   margin-bottom: 2px;
   white-space: pre-line;
@@ -43,21 +41,14 @@ const MessageBox = ({
     <Flex mb={4} flexDirection={isReverse ? "row-reverse" : "row"}>
       <Flex ml={2} flexDirection={"column"}>
         {showUsername && (
-          <UsernameText
-            color={"primary.c80"}
-            flexDirection={isReverse ? "row-reverse" : "row"}
-            mb={2}
-          >
+          <UsernameText color={"primary.c80"} flexDirection={isReverse ? "row-reverse" : "row"} mb={2}>
             {message.from}
           </UsernameText>
         )}
         <TextBody isReverse={isReverse}>
           <Linkify options={linkifyOptions}>{message.message}</Linkify>
         </TextBody>
-        <DateText
-          color={"primary.c100"}
-          flexDirection={isReverse ? "row-reverse" : "row"}
-        >
+        <DateText color={"primary.c100"} flexDirection={isReverse ? "row-reverse" : "row"}>
           {message?.meta?.creationDate}
         </DateText>
       </Flex>

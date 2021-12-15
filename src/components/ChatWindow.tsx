@@ -20,16 +20,26 @@ export default function ChatWindow({
   messages = [],
   onSubmitMessage,
   children,
+  onSubmitCommand,
   ...rest
 }: Partial<{
   userID: UserID;
   messages: Message[];
   onSubmitMessage?: (m: string) => void;
   children: React.ReactNode;
+  onSubmitCommand?: (command: string) => void;
 }>): React.ReactElement {
   const ref = useRef<HTMLElement>();
   const handlePushMessage = useCallback(
-    (mess) => {
+    (mess?: string) => {
+      console.log("push message", mess);
+      if (!mess) return;
+      if (mess.startsWith("/") && onSubmitCommand) {
+        console.log("submitting command", mess);
+        onSubmitCommand(mess.trim());
+        return;
+      }
+
       onSubmitMessage && onSubmitMessage(mess);
     },
     [userID]
@@ -38,9 +48,7 @@ export default function ChatWindow({
   useEffect(() => {
     const t = setTimeout(() => {
       if (ref && ref.current && ref.current.querySelectorAll) {
-        const els: HTMLElement[] = Array.from(
-          ref.current.querySelectorAll("div.message-gun")
-        );
+        const els: HTMLElement[] = Array.from(ref.current.querySelectorAll("div.message-gun"));
         if (els.length > 0) {
           const el: HTMLElement = els[els.length - 1];
           if (el) el.scrollIntoView();
@@ -53,13 +61,7 @@ export default function ChatWindow({
 
   console.log(messages);
   return (
-    <Flex
-      flex="1"
-      flexDirection="column"
-      alignItems="stretch"
-      position="relative"
-      {...rest}
-    >
+    <Flex flex="1" flexDirection="column" alignItems="stretch" position="relative" {...rest}>
       <ChatContainer ref={ref}>
         {children}
         {messages.map((message, i) => (
