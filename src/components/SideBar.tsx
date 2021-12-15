@@ -75,6 +75,9 @@ const ChannelListItem = styled.li<{ selected: boolean }>`
     color: ${(props) => props.theme.colors.background.main};
   }
 
+  background-color: ${(props) =>
+    props.selected ? props.theme.colors.primary.c100 : "transparent"};
+
   :active {
     font-weight: bold;
     background: ${(props) => props.theme.colors.primary.c100};
