@@ -50,16 +50,11 @@ const UserProfileManager = ({
   onAliasChange,
   onFollowedChange,
   onBlackListChange,
-}: Props) => {
-  const {
-    id,
-    alias,
-    account,
-    currency,
-    followed = [],
-    followers = [],
-    blackList = [],
-  } = user;
+}: Props): React.ReactElement => {
+  const { id, alias, account, currency } = user || {};
+  const followed: string[] = [];
+  const followers: string[] = [];
+  const blackList: string[] = [];
   const [editingAlias, setEditingAlias] = useState(false);
   const [aliasEdit, setAliasEdit] = useState(alias);
   const aliasInput = useRef<HTMLInputElement>(null);

@@ -82,10 +82,10 @@ const useGun = (): {
 
   useEffect(() => {
     // @ts-expect-error error
-    gun.on("auth", async () => {
-      const pro = await user; // username string
-      setProfile(pro);
-    });
+    if (user.is) {
+      // @ts-expect-error error
+      user.then(setProfile);
+    }
     /* Webrtc Debugging Stuff */
     /* eslint-disable no-console */
     // gun.on(
@@ -225,7 +225,7 @@ const useGun = (): {
       return new Promise((resolve, reject) => {
         if (!gun) reject(false);
         user
-          .create(username, password, ({ err }: any) => {
+          .create(username, password, () => {
             return login(username, password).then(resolve, reject);
           })
           .on((ack: any) => {
@@ -240,6 +240,7 @@ const useGun = (): {
               data: {},
               meta: {},
             };
+            setProfile({ id: username, ...infos });
             user.set(infos);
             // const pair = SEA.pair((keys) => console.log("SEA keys", keys));
             resolve(ack);
