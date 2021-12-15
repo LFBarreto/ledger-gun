@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { map, reduce, sortBy } from "lodash";
 
@@ -6,6 +6,7 @@ import Button from "./Button";
 import Box from "./Box";
 import { User } from "../types";
 import useGun from "../hooks/useGun";
+import ChannelForm from "./ChannelForm";
 
 type RoomTree<Keys extends string> = {
   [K in Keys]: string[];
@@ -94,6 +95,24 @@ const SideBar = ({
   onCreate,
 }: SideBarProps): JSX.Element => {
   const { logout } = useGun();
+  const [isChannelFormOpen, setChannelFormOpen] = useState(false);
+
+  const handleCreate = (value: string) => {
+    onCreate(value);
+    setChannelFormOpen(false);
+  };
+
+  if (isChannelFormOpen) {
+    return (
+      <SideBarBody>
+        <ChannelForm
+          onSubmit={handleCreate}
+          onClose={() => setChannelFormOpen(false)}
+        />
+      </SideBarBody>
+    );
+  }
+
   const sortedRooms = sortBy(rooms, (room) => room);
 
   const emptyRoomTree: RoomTree<"public" | "private"> = {
@@ -124,7 +143,7 @@ const SideBar = ({
     <SideBarBody>
       <div style={{ display: "flex" }}>
         <Button onClick={onClose}>{"<<"}</Button>
-        <AddRoomButton onClick={() => onCreate("general")}>
+        <AddRoomButton onClick={() => setChannelFormOpen(true)}>
           New Room
         </AddRoomButton>
       </div>

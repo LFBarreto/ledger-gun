@@ -10,10 +10,7 @@ import {
   createContext,
 } from "react";
 import { useRouter } from "next/router";
-import "../libs/webrtc";
-
-let gun: any;
-let user: any;
+// import "../libs/webrtc";
 
 const MyContext = createContext<any>({
   profile: null,
@@ -32,8 +29,6 @@ export const GunProvider = ({ children }: any) => {
   const [chan, setChan] = useState("");
   const [messages, setMessages] = useState({});
 
-  console.log(messages);
-
   const value = {
     profile,
     setProfile,
@@ -47,6 +42,13 @@ export const GunProvider = ({ children }: any) => {
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
 };
+
+const gun = Gun([
+  "http://localhost:3000/gun",
+  "https://ledger-gun.vercel.app/gun",
+  "https://gun-hackathon-test.herokuapp.com/gun",
+]);
+const user = gun.user().recall({ sessionStorage: true });
 
 const useGun = (): {
   createUser: (username: string, password: string) => Promise<unknown>;
@@ -62,6 +64,7 @@ const useGun = (): {
   createChannel: (id: string) => void;
   messages: any[];
   sendMessage: (message: string) => void;
+  updateMessages: () => void;
 } => {
   const {
     profile,
@@ -77,61 +80,55 @@ const useGun = (): {
   const router = useRouter();
 
   useEffect(() => {
-    gun = Gun([
-      "http://localhost:3000/gun",
-      "https://ledger-gun.vercel.app/gun",
-      "https://gun-hackathon-test.herokuapp.com/gun",
-    ]);
-    user = gun.user().recall({ sessionStorage: true });
+    // @ts-expect-error error
     gun.on("auth", async () => {
       const pro = await user; // username string
       setProfile(pro);
     });
-
     /* Webrtc Debugging Stuff */
     /* eslint-disable no-console */
-    gun.on(
-      "hi",
-      function (peer: RTCPeerConnection & { url: string; wire: unknown }) {
-        console.log("hi!", peer);
-        if (peer.url) {
-          return;
-        }
-        // @ts-expect-error Bad bindings…
-        Gun.obj.map(
-          gun.back("opt.peers"),
-          function (
-            peer: RTCPeerConnection & {
-              url: string;
-              wire: { send: (_: string) => void; _send: (_: string) => void };
-            }
-          ) {
-            if (!peer.url || !peer.wire) {
-              return;
-            }
-            peer.wire._send = peer.wire.send;
-            peer.wire.send = send;
-            const tmp =
-              "GOBBLE GOBBLE: Not sending any non-WebRTC messages to " +
-              peer.url;
-            console.log(tmp);
-          }
-        );
-      }
-    );
-    function send(raw: string) {
-      if (!raw) {
-        return;
-      }
-      if (raw.indexOf("rtc") >= 0) {
-        // @ts-expect-error …………
-        if (!this._send) {
-          return;
-        }
-        // @ts-expect-error …………
-        return this._send(raw);
-      }
-    }
+    // gun.on(
+    //   "hi",
+    //   function (peer: RTCPeerConnection & { url: string; wire: unknown }) {
+    //     console.log("hi!", peer);
+    //     if (peer.url) {
+    //       return;
+    //     }
+    //     // @ts-expect-error Bad bindings…
+    //     Gun.obj.map(
+    //       gun.back("opt.peers"),
+    //       function (
+    //         peer: RTCPeerConnection & {
+    //           url: string;
+    //           wire: { send: (_: string) => void; _send: (_: string) => void };
+    //         }
+    //       ) {
+    //         if (!peer.url || !peer.wire) {
+    //           return;
+    //         }
+    //         peer.wire._send = peer.wire.send;
+    //         peer.wire.send = send;
+    //         const tmp =
+    //           "GOBBLE GOBBLE: Not sending any non-WebRTC messages to " +
+    //           peer.url;
+    //         console.log(tmp);
+    //       }
+    //     );
+    //   }
+    // );
+    // function send(raw: string) {
+    //   if (!raw) {
+    //     return;
+    //   }
+    //   if (raw.indexOf("rtc") >= 0) {
+    //     // @ts-expect-error …………
+    //     if (!this._send) {
+    //       return;
+    //     }
+    //     // @ts-expect-error …………
+    //     return this._send(raw);
+    //   }
+    // }
     /* eslint-enable no-console */
     /* ---------------------- */
 
@@ -142,28 +139,58 @@ const useGun = (): {
     return () => gun.off();
   }, []);
 
-  useEffect(() => {
-    let ev: any = null;
-    const messages = gun.get("channels").get(chan).get("messages");
-    // @ts-expect-error error
-    messages.map().on((msgs: any, key: any, _msg: any, _ev: any) => {
-      ev = _ev;
-      if (msgs) {
-        setMessages((m: any) => {
-          if (!m[chan]) m[chan] = [];
-          m[chan] = m[chan]
-            .concat(msgs)
+  const updateMessages = useCallback(() => {
+    if (chan) {
+      console.log("update messages", chan);
+      const m = gun.get("channels").get(chan).get("messages");
+      // @ts-expect-error error
+      m.map().on((msgs: any, key: any, _msg: any, ev: any) => {
+        if (msgs) {
+          const M = messages;
+          if (!M[chan]) M[chan] = [];
+          M[chan] = M[chan]
+            .concat([msgs])
             .filter(
-              (d: any, i: any, arr: any[]) =>
-                arr.findIndex((dd) => dd.id === d.id) === i
-            )
-            .slice(0, 100);
-          return m;
-        });
-      }
-    });
+              (data: any, i: number, arr: any[]) =>
+                arr.findIndex((d: any) => d.data["#"] === data.data["#"]) === i
+            );
+          console.log({ M, msgs });
+          setMessages(M);
+          ev.off();
+        }
+      });
+    }
+  }, [chan, setMessages, messages]);
 
-    return () => ev?.off();
+  useEffect(() => {
+    console.log("subscribe to", chan);
+    let ev: any = null;
+    if (chan) {
+      const messages = gun.get("channels").get(chan).get("messages");
+      // @ts-expect-error error
+      messages.map().on((msgs: any, key: any, _msg: any, _ev: any) => {
+        console.log({ msgs }, "subs");
+        ev = _ev;
+        if (msgs) {
+          setMessages((m: any) => {
+            if (!m[chan]) m[chan] = [];
+            m[chan] = m[chan]
+              .concat([msgs])
+              .filter(
+                (data: any, i: number, arr: any[]) =>
+                  arr.findIndex((d: any) => d.data["#"] === data.data["#"]) ===
+                  i
+              );
+            return m;
+          });
+        }
+      });
+    }
+
+    return () => {
+      ev?.off();
+      console.log("unsubscribe to", chan);
+    };
   }, [chan]);
 
   const login = useCallback(
@@ -179,6 +206,7 @@ const useGun = (): {
     [gun]
   );
 
+  // @ts-expect-error error
   const isLogged = useCallback(() => user.is, [user]);
 
   const logout = useCallback(() => {
@@ -210,66 +238,27 @@ const useGun = (): {
     [gun]
   );
 
-  /*
-  const getChannelMessages = useCallback((id) => {
-    const match = {
-      // lexical queries are kind of like a limited RegEx or Glob.
-      ".": {
-        // property selector
-        ">": new Date(+new Date() - 1 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
-      },
-      "-": 1, // filter in reverse
-    };
-
-    gun
-      .get("channels")
-      .get(id)
-      .map(match)
-      .once(async (data, id) => {
-        if (data) {
-          // Key for end-to-end encryption
-          const key = "#foo";
-          const message = {
-            // transform the data
-            who: await gun.user(data).get("alias"), // a user might lie who they are! So let the user system detect whose data it is.
-            what: data,
-            when: Gun.state.is(data, "what"), // get the internal timestamp for the what property.
-          };
-          if (message.what) {
-            messages = [...messages.slice(-100), message].sort(
-              (a, b) => a.when - b.when
-            );
-            if (canAutoScroll) {
-              autoScroll();
-            } else {
-              unreadMessages = true;
-            }
-          }
-        }
-      });
-  }, []);
-  */
-
   const sendMessage = useCallback(
-    (message) => {
+    async (message) => {
       if (chan) {
         const id = new Date().toISOString();
-        console.log(id, chan);
-        gun
+        const alias = await user.get("alias");
+        await gun
           .get("channels")
           .get(chan)
           .get("messages")
           .get(id)
           .put({
             id,
-            from: profile.alias,
+            from: alias,
             message,
             data: {},
             meta: { creationDate: id },
           });
+        updateMessages();
       }
     },
-    [chan, profile]
+    [chan, updateMessages]
   );
 
   const createChannel = useCallback((id: string) => {
@@ -289,6 +278,7 @@ const useGun = (): {
     setChannel: setChan,
     createChannel,
     messages: chan ? messages?.[chan] ?? [] : [],
+    updateMessages,
     sendMessage,
   };
 };
