@@ -3,6 +3,7 @@ import "gun/sea";
 import "gun/axe";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import "../libs/webrtc";
 
 let gun: any;
 let user: any;
@@ -30,6 +31,54 @@ const useGun = (): {
       const pro = await user; // username string
       setProfile(pro);
     });
+
+    /* Webrtc Debugging Stuff */
+    /* eslint-disable no-console */
+    gun.on(
+      "hi",
+      function (peer: RTCPeerConnection & { url: string; wire: unknown }) {
+        console.log("hi!", peer);
+        if (peer.url) {
+          return;
+        }
+        // @ts-expect-error Bad bindings…
+        Gun.obj.map(
+          gun.back("opt.peers"),
+          function (
+            peer: RTCPeerConnection & {
+              url: string;
+              wire: { send: (_: string) => void; _send: (_: string) => void };
+            }
+          ) {
+            if (!peer.url || !peer.wire) {
+              return;
+            }
+            peer.wire._send = peer.wire.send;
+            peer.wire.send = send;
+            const tmp =
+              "GOBBLE GOBBLE: Not sending any non-WebRTC messages to " +
+              peer.url;
+            console.log(tmp);
+          }
+        );
+      }
+    );
+    function send(raw: string) {
+      if (!raw) {
+        return;
+      }
+      if (raw.indexOf("rtc") >= 0) {
+        // @ts-expect-error …………
+        if (!this._send) {
+          return;
+        }
+        // @ts-expect-error …………
+        return this._send(raw);
+      }
+    }
+    /* eslint-enable no-console */
+    /* ---------------------- */
+
     return () => gun.off();
   }, []);
 
