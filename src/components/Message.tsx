@@ -38,6 +38,7 @@ const MessageBox = ({
   isReverse: boolean;
   showUsername: boolean;
 }): JSX.Element => {
+  console.log({ message });
   return (
     <Flex mb={4} flexDirection={isReverse ? "row-reverse" : "row"}>
       <Flex ml={2} flexDirection={"column"}>
@@ -57,7 +58,7 @@ const MessageBox = ({
           color={"primary.c100"}
           flexDirection={isReverse ? "row-reverse" : "row"}
         >
-          {message.meta.creationDate.toLocaleTimeString()}
+          {message?.meta?.creationDate}
         </DateText>
       </Flex>
     </Flex>

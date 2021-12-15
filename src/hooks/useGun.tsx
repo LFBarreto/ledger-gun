@@ -143,31 +143,27 @@ const useGun = (): {
   }, []);
 
   useEffect(() => {
-    /*
-    const match = {
-      // lexical queries are kind of like a limited RegEx or Glob.
-      ".": {
-        // property selector
-        ">": new Date(+new Date() - 1 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
-      },
-      "-": 1, // filter in reverse
-    };
-    */
-    gun
-      .get("channels")
-      .get(chan)
-      .get("messages")
-      .on((msgs: any) => {
-        console.log({ msgs });
-        if (msgs) {
-          console.log(msgs);
-          setMessages((m: any) => {
-            if (!m[chan]) m[chan] = [];
-            m[chan] = m[chan].concat(msgs).slice(0, 100);
-            return m;
-          });
-        }
-      });
+    let ev: any = null;
+    const messages = gun.get("channels").get(chan).get("messages");
+    // @ts-expect-error error
+    messages.map().on((msgs: any, key: any, _msg: any, _ev: any) => {
+      ev = _ev;
+      if (msgs) {
+        setMessages((m: any) => {
+          if (!m[chan]) m[chan] = [];
+          m[chan] = m[chan]
+            .concat(msgs)
+            .filter(
+              (d: any, i: any, arr: any[]) =>
+                arr.findIndex((dd) => dd.id === d.id) === i
+            )
+            .slice(0, 100);
+          return m;
+        });
+      }
+    });
+
+    return () => ev?.off();
   }, [chan]);
 
   const login = useCallback(
@@ -260,7 +256,7 @@ const useGun = (): {
         const id = new Date().toISOString();
         console.log(id, chan);
         gun
-          .get("chans")
+          .get("channels")
           .get(chan)
           .get("messages")
           .get(id)
