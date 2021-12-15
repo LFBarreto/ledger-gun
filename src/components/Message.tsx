@@ -49,7 +49,7 @@ const MessageBox = ({
             flexDirection={isReverse ? "row-reverse" : "row"}
             mb={2}
           >
-            {message.from}
+            {typeof message.from === "string" ? message.from : ""}
           </UsernameText>
         )}
         <TextBody isReverse={isReverse}>
