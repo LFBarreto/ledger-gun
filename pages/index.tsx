@@ -59,7 +59,12 @@ const DebugApp = (): React.ReactElement => {
   };
 
   return (
-    <Flex flex="1" flexDirection="row" justifyContent="space-between" alignItems="stretch">
+    <Flex
+      flex="1"
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="stretch"
+    >
       <Flex flex="1" flexDirection="column">
         {ready ? (
           accounts.length ? (
@@ -77,10 +82,23 @@ const DebugApp = (): React.ReactElement => {
             })
           ) : (
             <>
-              <Input placeholder="username" value={username} onChange={setUsername} type="text" />
-              <Input placeholder="password" value={password} onChange={setPassword} type="password" />
+              <Input
+                placeholder="username"
+                value={username}
+                onChange={setUsername}
+                type="text"
+              />
+              <Input
+                placeholder="password"
+                value={password}
+                onChange={setPassword}
+                type="password"
+              />
               {!username || !password ? null : (
-                <Button disabled={!username || !password} onClick={() => login(username, password)}>
+                <Button
+                  disabled={!username || !password}
+                  onClick={() => login(username, password)}
+                >
                   {t("login")}
                 </Button>
               )}
