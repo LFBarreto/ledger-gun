@@ -26,7 +26,7 @@
     "linkifyjs": "^3.0.4",
     "lodash": "^4.17.21",
     "modern-normalize": "^1.1.0",
-    "next": "12.0.7",
+    "next": "12.1.0",
     "next-i18next": "^10.0.1",
     "qrcode-generator": "^1.4.4",
     "react": "17.0.2",
